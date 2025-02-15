@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maths VLab</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header>
+      <div class="container header-container">
+        <div class="left-section">
+          <button class="menu-btn" id="menu-btn">&#9776;</button>
+          <h1>Maths VLab</h1>
+        </div>
+        <div class="right-section">
+          <a href="signup.html" target="_blank" class="auth-btn">Sign Up</a>
+          <a href="signin.html" target="_blank" class="auth-btn">Sign In</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- SIDE NAVIGATION -->
+    <nav id="sidenav" class="sidenav">
+      <button class="close-btn" id="close-btn">&times;</button>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="simulations.html">Simulations</a></li>
+        <li><a href="graphing.html">Graphing Tools</a></li>
+        <li><a href="lectures.html">Video Lectures</a></li>
+        <li><a href="notes.html">Notepad</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="doubts.html">Doubt Solving</a></li>
+        <li><a href="student-corner.html">Student Corner</a></li>
+      </ul>
+    </nav>
+    <div id="overlay" class="overlay"></div>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="hero">
+      <div class="container">
+        <h2>Welcome to Maths VLab</h2>
+        <p>Interactive Learning for Math Enthusiasts</p>
+        <a href="#features-carousel" class="btn">Get Started</a>
+      </div>
+    </section>
+
+    <!-- FEATURES CAROUSEL SECTION -->
+    <section id="features-carousel">
+      <div class="container">
+        <h2>Our Features</h2>
+        <div class="features-carousel">
+          <!-- Each carousel item has a data-index and data-target attribute -->
+          <div class="carousel-item" data-index="0" data-target="detail-simulations">
+            <h3>Interactive Simulations</h3>
+            <p>Experience dynamic math simulations.</p>
+          </div>
+          <div class="carousel-item" data-index="1" data-target="detail-graphing">
+            <h3>Graphing Tools</h3>
+            <p>Visualize equations effectively.</p>
+          </div>
+          <div class="carousel-item" data-index="2" data-target="detail-lectures">
+            <h3>Video Lectures</h3>
+            <p>Learn from expert educators.</p>
+          </div>
+          <div class="carousel-item" data-index="3" data-target="detail-notepad">
+            <h3>Notepad</h3>
+            <p>Keep your notes organized.</p>
+          </div>
+          <div class="carousel-item" data-index="4" data-target="detail-calendar">
+            <h3>Calendar</h3>
+            <p>Manage your schedule seamlessly.</p>
+          </div>
+          <div class="carousel-item" data-index="5" data-target="detail-doubts">
+            <h3>Doubt Solving</h3>
+            <p>Get answers to your math questions.</p>
+          </div>
+          <div class="carousel-item" data-index="6" data-target="detail-student-corner">
+            <h3>Student Corner</h3>
+            <p>Connect with fellow learners.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURE DETAIL SECTIONS (Always Visible) -->
+    <section class="feature-detail" id="detail-simulations">
+      <div class="container">
+        <h3>Interactive Simulations</h3>
+        <p>
+          Our interactive simulations let you manipulate variables and view real-time changes, deepening your understanding of complex math concepts.
+        </p>
+      </div>
+    </section>
+
+    <section class="feature-detail" id="detail-graphing">
+      <div class="container">
+        <h3>Graphing Tools</h3>
+        <p>
+          Our advanced graphing tools provide clear visualizations of equations, helping you analyze data with precision.
+        </p>
+      </div>
+    </section>
+
+    <section class="feature-detail" id="detail-lectures">
+      <div class="container">
+        <h3>Video Lectures</h3>
+        <p>
+          Enjoy high-quality lectures from top educators, breaking down even the toughest topics into digestible lessons.
+        </p>
+      </div>
+    </section>
+
+    <section class="feature-detail" id="detail-notepad">
+      <div class="container">
+        <h3>Notepad</h3>
+        <p>
+          Keep your study notes organized and accessible with our integrated notepad.
+        </p>
+      </div>
+    </section>
+
+    <section class="feature-detail" id="detail-calendar">
+      <div class="container">
+        <h3>Calendar</h3>
+        <p>
+          Stay organized by managing your study sessions, deadlines, and events all in one place.
+        </p>
+      </div>
+    </section>
+
+    <section class="feature-detail" id="detail-doubts">
+      <div class="container">
+        <h3>Doubt Solving</h3>
+        <p>
+          Ask questions and get quick, helpful answers from our vibrant community of learners and mentors.
+        </p>
+      </div>
+    </section>
+
+    <section class="feature-detail" id="detail-student-corner">
+      <div class="container">
+        <h3>Student Corner</h3>
+        <p>
+          Connect, share, and collaborate with fellow students to enhance your learning experience.
+        </p>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS SECTION (Carousel) -->
+    <section id="testimonials">
+      <div class="container">
+        <h2>What Our Users Say</h2>
+        <div class="testimonials-carousel">
+          <div class="carousel-item active">
+            <p>"Maths VLab has transformed my learning experience. The interactive tools make math engaging and fun!"</p>
+            <h4>- Alex R.</h4>
+          </div>
+          <div class="carousel-item">
+            <p>"The video lectures and graphing tools make complex topics accessible and enjoyable."</p>
+            <h4>- Jamie L.</h4>
+          </div>
+          <div class="carousel-item">
+            <p>"The notepad and calendar integration keeps my study schedule perfectly organized."</p>
+            <h4>- Sam K.</h4>
+          </div>
+        </div>
+        <div class="carousel-controls">
+          <button id="prevTestimonialBtn">&#10094;</button>
+          <button id="nextTestimonialBtn">&#10095;</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CALL-TO-ACTION (CTA) SECTION -->
+    <section id="cta" class="cta-section">
+      <div class="container">
+        <h2>Ready to Dive In?</h2>
+        <p>Join Maths VLab today and revolutionize your math learning experience.</p>
+        <a href="signup.html" target="_blank" class="btn cta-btn">Get Started</a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Maths VLab. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
