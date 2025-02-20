@@ -8,12 +8,13 @@
 body {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   min-height: 100vh;
   background-image: url("./assets/bg.png");
   background-size: cover;
   background-position: center;
   padding: 20px;
+  margin-top: 30px;
 }
 
 .container {
@@ -136,4 +137,27 @@ p {
       padding: 12px;
       font-size: 14px;
   }
+}
+
+/* Spinner Style */
+.spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #fff;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Spinner Animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Disable Button while loading */
+.btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }

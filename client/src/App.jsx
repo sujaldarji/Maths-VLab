@@ -7,6 +7,7 @@ import LandingPage from './LandingPage';
 
 
 function App() {
+  
     return (
         <BrowserRouter>
           <Routes>
@@ -14,6 +15,7 @@ function App() {
             <Route path="/register" element={<SignUp />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/resetpassword" element={<ForgetPassword />} />
+            <Route path="/success" element={<success />} />
           </Routes>
         
         </BrowserRouter> 

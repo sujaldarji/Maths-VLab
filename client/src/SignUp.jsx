@@ -1,12 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from 'react-router-dom';
-import SignUpImage from './assets/signUp.jpg'
-import './SignUp.css'
+import SignUpImage from './assets/signUp.jpg';
+import './SignUp.css';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [message, setMessage] = useState(""); // State to store feedback messages
+    const [loading, setLoading] = useState(false); // Loading state
+    const navigate = useNavigate();
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        if (password !== confirmPassword) {
+            setMessage("Passwords do not match!");
+            return;
+        }
+
+        setLoading(true);
+        setMessage("");
+
+        try {
+            const response = await axios.post('http://localhost:3001/register', { name, email, password });
+        
+            // Success case
+            setMessage("✅ Registered successfully! Redirecting...");
+            setTimeout(() => navigate('/signin'), 2000);
+        } catch (error) {
+            if (error.response && error.response.data.message) {
+                // If backend sent a meaningful error message
+                setMessage(`⚠️ ${error.response.data.message}`);
+            } else {
+                // Generic error message
+                setMessage("❌ An error occurred. Please try again.");
+            }
+        } finally {
+            setLoading(false);
+        }
+        
+    };
 
     return (
-
         <div className="container">
             <div className="left-panel">
                 <img src={SignUpImage} alt="Illustration" />
@@ -14,33 +53,48 @@ function SignUp() {
             <div className="right-panel">
                 <img src="" alt="Project Logo" className="logo" />
                 <h2>Create an Account</h2>
-                <form>
+                
+                {message && <p className="message">{message}</p>} {/* Display feedback message */}
+
+                <form onSubmit={handleSubmit}>
                     <input 
                         type="text" 
                         name="name" 
                         placeholder="Full Name" 
-                        required />
+                        onChange={(e) => setName(e.target.value)}
+                        required 
+                    />
                     <input 
                         type="email" 
                         name="email" 
-                        placeholder="Email" 
-                        required />
+                        placeholder="Email"
+                        onChange={(e) => setEmail(e.target.value)} 
+                        required 
+                    />
                     <input 
                         type="password" 
                         name="password" 
-                        placeholder="Password" />
+                        placeholder="Password" 
+                        onChange={(e) => setPassword(e.target.value)} 
+                        required 
+                    />
                     <input 
                         type="password" 
                         name="confirmPassword" 
                         placeholder="Confirm Password" 
-                        required />
-                    <button type="submit" className="btn">Sign Up</button>
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required 
+                    />
+
+                    <button type="submit" className="btn" disabled={loading}>
+                        {loading ? "Signing Up..." : "Sign Up"}
+                    </button>
                 </form>
-                <p>Already have an account?<Link to="/signin" className="link">Sign In</Link></p>
+
+                <p>Already have an account? <Link to="/signin" className="link">Sign In</Link></p>
             </div>
         </div>
-    )
-    
+    );
 }
 
 export default SignUp;

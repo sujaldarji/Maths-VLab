@@ -1,6 +1,6 @@
 import React from "react";
 
-function SignIn() {
+function ForgetPassword() {
 
     return (
         <div >
@@ -10,4 +10,4 @@ function SignIn() {
     )    
 }
 
-export default SignIn;
+export default ForgetPassword;
