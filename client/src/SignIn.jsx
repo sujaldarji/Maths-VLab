@@ -48,7 +48,7 @@ function SignIn() {
 
             {/* Right Panel with Sign-in Form */}
             <div className="right-panel">
-                <img src="" alt="Project Logo" className="logo" />
+                <img src="https://via.placeholder.com/100" alt="Project Logo" className="logo" />
                 <h2>Welcome Back!</h2>
 
                 {/* Error & Success Messages */}

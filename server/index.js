@@ -73,12 +73,8 @@ app.post('/signin', async (req, res) => {
             return res.status(404).json({ message: "No user found with this email" });
         }
 
-        console.log("🔍 Entered Password:", password);
-        console.log("🔑 Stored Hashed Password:", user.password);
-
         // * Compare hashed password
-        const isMatch = await bcrypt.compare(password, user.password);
-        console.log("🔄 Password Match Status:", isMatch);
+        const isMatch = bcrypt.compare(password, user.password);
 
         if (!isMatch) {
             console.log("❌ Incorrect password entered.");
