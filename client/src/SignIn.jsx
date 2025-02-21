@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import SignInImage from "./assets/signIn.jpg";
-import "./SignIn.css";
+import "./styles/SignIn.css";
 
 function SignIn() {
     // * State Variables
