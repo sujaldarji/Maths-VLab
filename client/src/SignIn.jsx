@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import SignInImage from "./assets/signIn.jpg";
-import "./SignIn.css";
+import "./styles/SignIn.css";
+import Logo from './assets/logo2.png';
 
 function SignIn() {
     // * State Variables
@@ -40,6 +41,7 @@ function SignIn() {
     
 
     return (
+        <div className="auth-container">
         <div className="container">
             {/* Left Panel with Image */}
             <div className="left-panel">
@@ -48,7 +50,7 @@ function SignIn() {
 
             {/* Right Panel with Sign-in Form */}
             <div className="right-panel">
-                <img src="https://via.placeholder.com/100" alt="Project Logo" className="logo" />
+                <img src={Logo} alt="Project Logo" className="logo" />
                 <h2>Welcome Back!</h2>
 
                 {/* Error & Success Messages */}
@@ -82,6 +84,7 @@ function SignIn() {
                 <p>Don't have an account yet? <Link to="/register" className="link">Sign Up</Link></p>
                 <p><Link to="/resetpassword" className="link">Forgot Password?</Link></p>
             </div>
+        </div>
         </div>
     );
 }

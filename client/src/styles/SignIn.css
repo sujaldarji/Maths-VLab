@@ -6,17 +6,22 @@
 }
 
 /* Fullscreen Centered Layout */
-body {
+.auth-container { 
+    min-height: 100vh;
+    background-image: url("../assets/bg.jpg");
+    background-size: cover;
+    background-position: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background-image: url("./assets/bg.png");
-    background-size: cover;
-    background-position: center;
     padding: 20px;
+    width: 100%;
 }
-
+.logo {
+    width: 100px; /* Adjust size as needed */
+    height: 100px;
+    object-fit: contain;
+  }
 .container {
     display: flex;
     flex-direction: row;
