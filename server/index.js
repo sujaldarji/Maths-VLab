@@ -74,7 +74,8 @@ app.post('/signin', async (req, res) => {
         }
 
         // * Compare hashed password
-        const isMatch = bcrypt.compare(password, user.password);
+        const isMatch = await bcrypt.compare(password, user.password);
+        
 
         if (!isMatch) {
             console.log("❌ Incorrect password entered.");

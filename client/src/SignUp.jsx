@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from 'react-router-dom';
 import SignUpImage from './assets/signUp.jpg';
-import './styles/SignUp.css';
+import './styles/Auth.css';
 import axios from 'axios';
 import Logo from './assets/logo2.png';
 import { useNavigate } from 'react-router-dom';
@@ -48,7 +48,7 @@ function SignUp() {
 
     return (
         <div className="auth-container">
-        <div className="container">
+        <div className="auth-box">
             <div className="left-panel">
                 <img src={SignUpImage} alt="Illustration" />
             </div>

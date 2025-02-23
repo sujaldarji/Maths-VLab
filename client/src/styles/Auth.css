@@ -1,0 +1,210 @@
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Fullscreen Centered Layout */
+  .auth-container {
+    min-height: 100vh;
+    background-image: url("../assets/bg.png");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+  }
+  
+  /* Logo */
+  .logo {
+    width: 200px;
+    height: 100px;
+    object-fit: contain;
+  }
+  
+  /* Main Auth Container */
+  .auth-box {
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    max-width: 700px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+/* Left Panel - Image */
+.left-panel {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+    height: 100%;
+    min-height: 100%;
+    overflow: hidden; /* Prevents overflow */
+  }
+  
+  .left-panel img {
+    width: 100%;  /* Fill full width of panel */
+    height: 100%; /* Fill full height of panel */
+    object-fit: cover; /* Ensures full image is visible */
+    border-radius: 8px; /* Optional: Adds rounded corners */
+  }
+  
+  
+  
+  
+  /* Right Panel - Form */
+  .right-panel {
+    flex: 1;
+    padding: 40px;
+    background-color: rgba(65, 105, 225, 0.85); /* Slight transparency */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  /* Form & Inputs */
+  h2 {
+    margin-bottom: 20px;
+    font-size: 26px;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 14px;
+    margin: 12px 0;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+  }
+  
+  /* Buttons */
+  .btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #5a9;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  
+  .btn:hover {
+    background-color: #468c6c;
+    transform: scale(1.02);
+  }
+  
+  .btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Links */
+  p {
+    margin-top: 12px;
+  }
+  
+  .link {
+    color: white;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .link:hover {
+    color: #ffcc00;
+  }
+  
+  /* Error & Success Messages */
+  .error-message {
+    color: red;
+    font-size: 14px;
+    margin: 10px 0;
+    text-align: center;
+  }
+  
+  .success-message {
+    color: green;
+    font-size: 14px;
+    margin: 10px 0;
+    text-align: center;
+  }
+  
+  /* Spinner */
+  .spinner {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #fff;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 900px) {
+    .auth-box {
+      flex-direction: column;
+      width: 85%;
+      max-width: 420px;
+    }
+  
+    .left-panel {
+      display: none;
+    }
+  
+    .right-panel {
+      padding: 35px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .right-panel {
+      padding: 25px;
+    }
+  
+    h2 {
+      font-size: 22px;
+    }
+  
+    input {
+      padding: 12px;
+      font-size: 14px;
+    }
+  
+    .btn {
+      padding: 12px;
+      font-size: 14px;
+    }
+  }
+  
+  /* Fade-in Animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.97); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  
