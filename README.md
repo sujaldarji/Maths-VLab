@@ -6,8 +6,6 @@
 
 - [Features](#features)
 - [Installation](#installation)
-- [Contributing](#contributing)
-- [License](#license)
 - [Contact](#contact)
 
 ## Features
@@ -41,21 +39,6 @@ To set up Maths VLab locally, follow these steps:
    ```bash
    npm start
    ```
-
-
-## Contributing
-
-We welcome contributions from the community! To contribute:
-
-1. Fork the repository.
-2. Create a new branch: `git checkout -b feature/your-feature-name`.
-3. Make your changes and commit them: `git commit -m 'Add new feature'`.
-4. Push to the branch: `git push origin feature/your-feature-name`.
-5. Open a pull request.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Contact
 
