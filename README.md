@@ -39,7 +39,7 @@ To set up Maths VLab locally, follow these steps:
    ```bash
    npm start
    ```
-5. **Start the development server:**
+5. **Start the client:**
    ```bash
    npm run dev
    ```
