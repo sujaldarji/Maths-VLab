@@ -16,6 +16,7 @@
     "express": "^4.21.2",
     "express-validator": "^7.2.1",
     "mongoose": "^8.10.1",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "sanitize-html": "^2.14.0"
   }
 }

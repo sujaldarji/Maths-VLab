@@ -5,6 +5,8 @@ import SignInImage from "./assets/signIn.jpg";
 import "./styles/Auth.css";
 import Logo from "./assets/logo2.png";
 import { validateEmail, validatePassword } from "./utils/validations.js";
+import { sanitizeInput } from "./utils/sanitize.js";
+
 
 function SignIn() {
     // * State Variables
@@ -68,29 +70,30 @@ function SignIn() {
                     {/* Sign-in Form */}
                     <form onSubmit={handleSubmit}>
                         <input
-                            type="text"
+                            type="email"  // ✅ Change from "text" to "email"
                             name="email"
                             placeholder="Email"
                             value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={(e) => setEmail(sanitizeInput(e.target.value.trim()))} // ✅ Sanitize input
                             required
                         />
-                        {errors.email && <p className="error-text">{errors.email}</p>} {/* Show Email Error */}
+                        {errors.email && <p className="error-text">{errors.email}</p>} 
 
                         <input
                             type="password"
                             name="password"
                             placeholder="Password"
                             value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={(e) => setPassword(e.target.value.trim())} // ✅ Trim unnecessary spaces
                             required
                         />
-                        {errors.password && <p className="error-text">{errors.password}</p>} {/* Show Password Error */}
+                        {errors.password && <p className="error-text">{errors.password}</p>} 
 
                         <button type="submit" className="btn" disabled={loading}>
                             {loading ? <span className="spinner"></span> : "Login"}
                         </button>
                     </form>
+
 
                     {/* Links for Sign-up and Reset Password */}
                     <p>
