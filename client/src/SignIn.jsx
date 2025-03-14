@@ -3,15 +3,17 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import SignInImage from "./assets/signIn.jpg";
 import "./styles/Auth.css";
-import Logo from './assets/logo2.png';
+import Logo from "./assets/logo2.png";
+import { validateEmail, validatePassword } from "./utils/validations.js";
 
 function SignIn() {
     // * State Variables
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errors, setErrors] = useState({ email: "", password: "" }); // * Track validation errors
     const [errorMessage, setErrorMessage] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
-    const [loading, setLoading] = useState(false); // * State for loading spinner
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     // ! Handle Form Submission
@@ -19,73 +21,86 @@ function SignIn() {
         event.preventDefault();
         setErrorMessage("");
         setSuccessMessage("");
-        setLoading(true); // * Show spinner
-    
+        setLoading(true);
+
+        // * Perform validation on submit
+        const newErrors = {
+            email: validateEmail(email),
+            password: validatePassword(password),
+        };
+
+        // * If there are validation errors, prevent submission
+        if (Object.values(newErrors).some((error) => error !== "")) {
+            setErrors(newErrors);
+            setLoading(false);
+            return;
+        }
+
         try {
             const response = await axios.post("http://localhost:3001/signin", { email, password });
-    
+
             setSuccessMessage("✅ Login successful! Redirecting...");
             setTimeout(() => navigate("/success"), 2000);
         } catch (error) {
-            if (error.response && error.response.data.message) {
-                // If backend sent a meaningful error message
-                setErrorMessage(`⚠️ ${error.response.data.message}`);
-            } else {
-                // Generic error message for unexpected issues
-                setErrorMessage("⚠️ Server error! Please try again later.");
-            }
+            setErrorMessage(error.response?.data?.message || "⚠️ Server error! Please try again later.");
         } finally {
-            setLoading(false); // * Hide spinner after response
+            setLoading(false);
         }
     };
-    
 
     return (
         <div className="auth-container">
-        <div className="auth-box ">
-            
-            {/* Left Panel with Image */}
-            <div className="left-panel">
-                <img src={SignInImage} alt="Illustration" />
+            <div className="auth-box">
+                {/* Left Panel with Image */}
+                <div className="left-panel">
+                    <img src={SignInImage} alt="Illustration" />
+                </div>
+
+                {/* Right Panel with Sign-in Form */}
+                <div className="right-panel">
+                    <img src={Logo} alt="Project Logo" className="logo" />
+                    <h2>Welcome Back!</h2>
+
+                    {/* Error & Success Messages */}
+                    {errorMessage && <p className="error-message">{errorMessage}</p>}
+                    {successMessage && <p className="success-message">{successMessage}</p>}
+
+                    {/* Sign-in Form */}
+                    <form onSubmit={handleSubmit}>
+                        <input
+                            type="text"
+                            name="email"
+                            placeholder="Email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                        {errors.email && <p className="error-text">{errors.email}</p>} {/* Show Email Error */}
+
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                        {errors.password && <p className="error-text">{errors.password}</p>} {/* Show Password Error */}
+
+                        <button type="submit" className="btn" disabled={loading}>
+                            {loading ? <span className="spinner"></span> : "Login"}
+                        </button>
+                    </form>
+
+                    {/* Links for Sign-up and Reset Password */}
+                    <p>
+                        Don't have an account yet? <Link to="/register" className="link">Sign Up</Link>
+                    </p>
+                    <p>
+                        <Link to="/resetpassword" className="link">Forgot Password?</Link>
+                    </p>
+                </div>
             </div>
-
-            {/* Right Panel with Sign-in Form */}
-            <div className="right-panel">
-                <img src={Logo} alt="Project Logo" className="logo" />
-                <h2>Welcome Back!</h2>
-
-                {/* Error & Success Messages */}
-                {errorMessage && <p className="error-message">{errorMessage}</p>}
-                {successMessage && <p className="success-message">{successMessage}</p>}
-
-                {/* Sign-in Form */}
-                <form onSubmit={handleSubmit}>
-                    <input 
-                        type="text" 
-                        name="email" 
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)} 
-                        required 
-                    />
-                    <input 
-                        type="password" 
-                        name="password" 
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)} 
-                        required 
-                    />                        
-                    <button type="submit" className="btn" disabled={loading}>
-                        {loading ? <span className="spinner"></span> : "Login"}
-                    </button>
-                </form>
-
-                {/* Links for Sign-up and Reset Password */}
-                <p>Don't have an account yet? <Link to="/register" className="link">Sign Up</Link></p>
-                <p><Link to="/resetpassword" className="link">Forgot Password?</Link></p>
-            </div>
-        </div>
         </div>
     );
 }

@@ -5,6 +5,13 @@
     box-sizing: border-box;
     font-family: Arial, sans-serif;
   }
+  .error-text {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    text-align: left;
+}
+
   
   /* Fullscreen Centered Layout */
   .auth-container {
