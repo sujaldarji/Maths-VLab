@@ -15,16 +15,16 @@
   
   /* Fullscreen Centered Layout */
   .auth-container {
-    min-height: 100vh;
-    background-image: url("../assets/bg.png");
-    background-size: cover;
-    background-position: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    min-height: 100vh;
     width: 100%;
-  }
+    background-image: url("../assets/bg.png");
+    background-size: cover;
+    background-position: center;
+}
+
   
   /* Logo */
   .logo {
@@ -37,18 +37,17 @@
   .auth-box {
     display: flex;
     flex-direction: row;
-    width: 70%;
-    max-width: 700px;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 600px;
     background-color: white;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
     animation: fadeIn 0.5s ease-in-out;
-  }
+}
+
 
 /* Left Panel - Image */
 .left-panel {
