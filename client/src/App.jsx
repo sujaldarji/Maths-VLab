@@ -9,6 +9,7 @@ import ForgetPassword from './ForgetPassword';
 import LandingPage from './LandingPage';
 import Success from './success';
 import About from './AboutUs';
+import Navbar from "./components/navbar";
 
 function App() {
     useEffect(() => {
@@ -21,6 +22,8 @@ function App() {
 
     return (
         <BrowserRouter>
+        
+        <Navbar />
             <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/register" element={<SignUp />} />

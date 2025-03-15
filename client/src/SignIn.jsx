@@ -51,7 +51,7 @@ function SignIn() {
     };
 
     return (
-        <div className="auth-container">
+        <div className="auth-container"  data-aos="fade-up" data-aos-duration="1000">
             <div className="auth-box">
                 {/* Left Panel with Image */}
                 <div className="left-panel">
