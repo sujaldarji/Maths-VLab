@@ -1,27 +1,76 @@
-import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom"; // Import useLocation
+import React, { useState, useEffect, useCallback } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../styles/Navbar.css";
 import { FaBars, FaTimes } from "react-icons/fa";
-import logo from "../assets/Logo1.png"; // Import your logo image
+import logo from "../assets/Logo1.png";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const location = useLocation(); // Get the current route
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [username, setUsername] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate();
 
+  // Function to check authentication status
+  const checkAuth = useCallback(async () => {
+    try {
+      const response = await axios.get("http://localhost:3001/api/auth/auth-status", {
+        withCredentials: true, // Ensures cookies are sent
+      });
+
+      if (response.data.authenticated) {
+        setIsAuthenticated(true);
+        setUsername(response.data.user.name);
+      } else {
+        setIsAuthenticated(false);
+        setUsername("");
+      }
+    } catch (error) {
+      console.warn("Auth check failed:", error.response?.data || error.message);
+      setIsAuthenticated(false);
+      setUsername("");
+    }
+  }, []);
+
+  // Run authentication check when route changes
+  useEffect(() => {
+    checkAuth();
+  }, [location, checkAuth]);
+
+  // Handle Logout
+  const handleLogout = async () => {
+    try {
+      await axios.post("http://localhost:3001/api/auth/logout", {}, { withCredentials: true });
+
+      // Clear authentication state
+      setIsAuthenticated(false);
+      setUsername("");
+
+      // Navigate to Sign In page
+      navigate("/signin");
+
+      // Ensure auth status is refreshed
+      checkAuth();
+    } catch (error) {
+      console.error("Logout failed:", error.response?.data || error.message);
+    }
+  };
+
+  // Toggle mobile menu
   const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
+    setMenuOpen((prev) => !prev);
   };
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        {/* Logo on the left */}
+        {/* Logo */}
         <Link to="/" className="logo">
           <img src={logo} alt="Maths VLab Logo" />
         </Link>
 
-        {/* Hamburger Menu for Mobile */}
+        {/* Mobile Menu Icon */}
         <div className="menu-icon" onClick={toggleMenu}>
           {menuOpen ? <FaTimes /> : <FaBars />}
         </div>
@@ -32,21 +81,6 @@ const Navbar = () => {
             <Link to="/" onClick={toggleMenu} className={location.pathname === "/" ? "active" : ""}>
               Home
             </Link>
-          </li>
-          <li
-            className="dropdown"
-            onMouseEnter={() => setDropdownOpen(true)}
-            onMouseLeave={() => setTimeout(() => setDropdownOpen(false), 300)}
-          >
-            <span>Student Corner</span>
-            {dropdownOpen && (
-              <ul className="dropdown-menu" onMouseEnter={() => setDropdownOpen(true)} onMouseLeave={() => setDropdownOpen(false)}>
-                <li><a href="#">Option 1</a></li>
-                <li><a href="#">Option 2</a></li>
-                <li><a href="#">Option 3</a></li>
-                <li><a href="#">Option 4</a></li>
-              </ul>
-            )}
           </li>
           <li>
             <Link to="/about" onClick={toggleMenu} className={location.pathname === "/about" ? "active" : ""}>
@@ -60,8 +94,17 @@ const Navbar = () => {
           </li>
         </ul>
 
-        {/* Login Button on the extreme right */}
-        <Link to="/signin" className="login-btn">Login</Link>
+        {/* Authentication Section */}
+        <div className="auth-buttons">
+          {isAuthenticated ? (
+            <>
+              <span className="username">Hi, {username}!</span>
+              <button className="logout-btn" onClick={handleLogout}>Logout</button>
+            </>
+          ) : (
+            <Link to="/signin" className="login-btn">Login</Link>
+          )}
+        </div>
       </div>
     </nav>
   );

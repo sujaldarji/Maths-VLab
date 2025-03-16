@@ -9,6 +9,7 @@ const StudentModel = require('./Models/Student.js');
 const { validateSignUp, validateSignIn } = require('./middlewares/validation.js');
 const { sanitizeInput } = require('./middlewares/sanitize.js');
 const authenticateUser = require('./middlewares/auth.js');
+const authRoutes = require("./routes/auth");
 
 const app = express();
 app.use(express.json());
@@ -109,16 +110,19 @@ app.post('/signin', validateSignIn, async (req, res) => {
 });
 
 app.get('/success', authenticateUser, (req, res) => {
-    res.json({ message: `Welcome, user ${req.user.email}` });
+    res.json({ message: `Welcome, user ` });
 });
 
-app.post('/logout', (req, res) => {
-    res.cookie('token', '', { // Empty value
-        httpOnly: true,
-        sameSite: 'Lax',
-        expires: new Date(0) // Expire immediately
-    });
-    res.status(200).json({ message: "Logged out successfully" });
-});
+app.use("/api/auth", authRoutes);
+
+
+// app.post('/logout', (req, res) => {
+//     res.cookie('token', '', { // Empty value
+//         httpOnly: true,
+//         sameSite: 'Lax',
+//         expires: new Date(0) // Expire immediately
+//     });
+//     res.status(200).json({ message: "Logged out successfully" });
+// });
 
 

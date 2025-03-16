@@ -179,3 +179,44 @@ body {
   font-weight: 600;
   border-bottom: 2px solid #FFD700;
 }
+
+
+/* Authentication Section */
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Username Display */
+.username {
+  font-size: 16px;
+  font-weight: 500;
+  color: #FFD700; /* Golden color */
+  margin-right: 10px;
+}
+
+/* Logout Button */
+.logout-btn {
+  background-color: #ff4c4c; /* Red */
+  border: none;
+  color: white;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #cc0000; /* Darker Red */
+}
+
+/* Mobile View Adjustments */
+@media (max-width: 800px) {
+  .auth-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
