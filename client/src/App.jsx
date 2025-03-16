@@ -32,7 +32,7 @@ function App() {
                 <Route path="/resetpassword" element={<ForgetPassword />} />
                 <Route path="/success" element={<Success />} />
                 <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<About />} />
+                <Route path="/contact" element={<ContactUs />} />
             </Routes>
         </BrowserRouter>
     );
