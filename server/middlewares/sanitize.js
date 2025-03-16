@@ -13,4 +13,4 @@ const sanitizeMiddleware = (req, res, next) => {
     next();
 };
 
-module.exports = sanitizeMiddleware;
+module.exports = { sanitizeInput, sanitizeMiddleware };

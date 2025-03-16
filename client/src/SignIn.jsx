@@ -39,8 +39,10 @@ function SignIn() {
         }
 
         try {
-            const response = await axios.post("http://localhost:3001/signin", { email, password });
-
+            const response = await axios.post("http://localhost:3001/signin", 
+                { email, password }, 
+                { withCredentials: true } // 👈 Add this to allow cookies
+            );
             setSuccessMessage("✅ Login successful! Redirecting...");
             setTimeout(() => navigate("/success"), 2000);
         } catch (error) {

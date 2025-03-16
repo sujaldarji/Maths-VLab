@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
-const StudentModel = require('./Models/Student');
+const StudentModel = require('./Models/Student.js');
 const { validateSignUp, validateSignIn } = require('./middlewares/validation.js');
 const { sanitizeInput } = require('./middlewares/sanitize.js');
 const authenticateUser = require('./middlewares/auth.js');
@@ -13,12 +13,12 @@ const authenticateUser = require('./middlewares/auth.js');
 const app = express();
 app.use(express.json());
 app.use(cors({
-    origin: 'http://localhost:3001', // Change this to your frontend URL
+    origin: 'http://localhost:5173', // Change this to your frontend URL
     credentials: true, // Allow credentials (cookies)
 }));
 app.use(cookieParser());
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT;
 
 let server;
 // ! Connect to MongoDB with Error Handling
@@ -67,7 +67,7 @@ app.post('/register', validateSignUp, async (req, res) => {
         res.status(201).json({ success: true, message: "User registered successfully. Please sign in." });
 
     } catch (error) {
-        res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
     }
 });
 
