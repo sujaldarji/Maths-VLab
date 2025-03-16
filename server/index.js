@@ -2,18 +2,26 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+require('dotenv').config();
 const StudentModel = require('./Models/Student');
-const { validateSignUp, validateSignIn } = require('./middlewares/validation.js'); 
-const { sanitizeInput } = require('./middlewares/sanitize.js'); // ✅ Import sanitization function
+const { validateSignUp, validateSignIn } = require('./middlewares/validation.js');
+const { sanitizeInput } = require('./middlewares/sanitize.js');
+const authenticateUser = require('./middlewares/auth.js');
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3001', // Change this to your frontend URL
+    credentials: true, // Allow credentials (cookies)
+}));
+app.use(cookieParser());
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 // ! Connect to MongoDB with Error Handling
-mongoose.connect("mongodb://127.0.0.1:27017/student_details")
+mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         console.log("✅ Connected to MongoDB");
         server = app.listen(PORT, () => {
@@ -22,7 +30,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/student_details")
     })
     .catch(err => {
         console.error("❌ MongoDB Connection Error:", err.message);
-        process.exit(1); // Exit the process if DB connection fails
+        process.exit(1); // Exit if DB connection fails
     });
 
 // Handle process termination
@@ -37,12 +45,12 @@ const shutdown = () => {
 process.on("SIGINT", shutdown);
 process.on("SIGTERM", shutdown);
 
-// ! Register Endpoint (Signup)
+// ! Register Endpoint (Signup) - No JWT Here
 app.post('/register', validateSignUp, async (req, res) => {
     try {
-        const name = sanitizeInput(req.body.name); // ✅ Sanitize name
-        const email = sanitizeInput(req.body.email); // ✅ Sanitize email
-        const password = req.body.password; // Do not sanitize password
+        const name = sanitizeInput(req.body.name);
+        const email = sanitizeInput(req.body.email);
+        const password = req.body.password;
 
         // * Check if user already exists
         const existingUser = await StudentModel.findOne({ email });
@@ -55,18 +63,18 @@ app.post('/register', validateSignUp, async (req, res) => {
 
         // * Create new user
         const newUser = await StudentModel.create({ name, email, password: hashedPassword });
-        res.status(201).json({ success: true, user: newUser });
+        res.status(201).json({ success: true, message: "User registered successfully. Please sign in." });
 
     } catch (error) {
         res.status(500).json({ message: "Internal server error" });
     }
 });
 
-// ! Sign In Endpoint
+// ! Sign In Endpoint - Generates JWT Token
 app.post('/signin', validateSignIn, async (req, res) => {
     try {
-        const email = sanitizeInput(req.body.email); // ✅ Sanitize email
-        const password = req.body.password; // Do not sanitize password
+        const email = sanitizeInput(req.body.email);
+        const password = req.body.password;
 
         // * Check if user exists
         const user = await StudentModel.findOne({ email });
@@ -80,9 +88,34 @@ app.post('/signin', validateSignIn, async (req, res) => {
             return res.status(401).json({ message: "Incorrect password" });
         }
 
-        res.status(200).json({ message: "Login successful", user });
+        // * Generate JWT Token
+        const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET, {
+            expiresIn: process.env.JWT_EXPIRES_IN
+        });
+
+        // * Set token in HTTP-only cookie
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production', // Secure in production
+            sameSite: 'Strict'
+        });
+
+        res.status(200).json({ message: "Login successful" });
 
     } catch (error) {
         res.status(500).json({ message: "Internal server error" });
     }
 });
+
+app.get('/success', authenticateUser, (req, res) => {
+    res.json({ message: `Welcome, user ${req.user.email}` });
+});
+
+app.post('/logout', (req, res) => {
+    res.clearCookie('token', {
+        httpOnly: true,
+        sameSite: 'Strict'
+    });
+    res.status(200).json({ message: "Logged out successfully" });
+});
+
