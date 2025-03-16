@@ -6,13 +6,13 @@ import FeatureCard4 from "./assets/FeatureCard4.jpeg";
 import FeatureCard5 from "./assets/FeatureCard5.jpeg";
 import FeatureCard6 from "./assets/FeatureCard6.jpeg";
 import FeatureCard7 from "./assets/FeatureCard7.jpeg";
-
 import ArithmeticImg from "./assets/ExploreCategories1.jpg";
 import GeometryImg from "./assets/ExploreCategories2.jpg";
 import TrigonometryImg from "./assets/ExploreCategories3.jpg";
 import AlgebraImg from "./assets/ExploreCategories4.jpg";
 import DiscreteImg from "./assets/ExploreCategories5.jpg";
 import CalculusImg from "./assets/ExploreCategories6.jpg";
+
 
 const LandingPage = () => {
   const features = [
@@ -166,10 +166,20 @@ const LandingPage = () => {
       }
     }, [pause]);
     
+    const scrollToSection = (sectionId) => {
+      const element = document.getElementById(sectionId);
+      if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+  };
+  
+
   return (
     <>
+    
       {/* Hero Section */}
-      <div className="hero-section"  data-aos="fade-up" data-aos-duration="1000">
+      <div className="hero-section"  data-aos="fade-up" data-aos-duration="700">
+    
         <div className="hero-content">
           <h1>Welcome to Maths VLab</h1>
           <p>
@@ -177,9 +187,10 @@ const LandingPage = () => {
             Make complex concepts simple and engaging.
           </p>
           <div className="buttons">
-            <a href="#categories" className="btn primary">Get Started</a>
-            <a href="#features" className="btn secondary">Learn More</a>
-          </div>
+    <button className="btn primary" onClick={() => scrollToSection('categories')}>Get Started</button>
+    <button className="btn secondary" onClick={() => scrollToSection('features')}>Learn More</button>
+</div>
+
         </div>
         <div className="hero-animation">
           <div className="animation-placeholder">Animation Goes Here</div>
@@ -187,7 +198,7 @@ const LandingPage = () => {
       </div>
 
       {/* What is Maths VLab Section */}
-      <section className="maths-vlab-section"  data-aos="fade-up" data-aos-duration="1000">
+      <section className="maths-vlab-section"  data-aos="fade-up" data-aos-duration="700">
         <div className="maths-vlab-container">
           <h2 className="maths-vlab-heading">What is Maths VLab?</h2>
           <p className="maths-vlab-text">
@@ -205,7 +216,7 @@ const LandingPage = () => {
 
 
        {/* Features Section */}
-       <div className="feature-section"  data-aos="fade-up" data-aos-duration="1000">
+       <div className="feature-section"  data-aos="fade-up" data-aos-duration="700" id="features">
         <h2 className="feature-heading">Features</h2>
 
 
@@ -264,23 +275,24 @@ const LandingPage = () => {
 
 
 
-    <div>
-      <h1 className="title"  data-aos="fade-up" data-aos-duration="1000">Explore Categories</h1>
-      <div className="categories-container"  data-aos="fade-up" data-aos-duration="1000">
-        {categories.map((category, index) => (
-            <a href="#" className="category-card" key={index}>
-          <div className="category-card" key={index}>
-            <img src={category.image} alt={category.title} />
-            <div className="card-content">
-              <h2>{category.title}</h2>
-              <p>{category.description}</p>
-              <a>Explore {category.title} →</a>
-            </div>
-          </div>
-          </a>
-        ))}
-      </div>
-    </div>
+      <div>
+  <h1 className="title" data-aos="fade-up" data-aos-duration="700" id="categories">
+    Explore Categories
+  </h1>
+  <div className="categories-container" data-aos="fade-up" data-aos-duration="700">
+    {categories.map((category, index) => (
+      <a href="#" className="category-card" key={index}>
+        <img src={category.image} alt={category.title} />
+        <div className="card-content">
+          <h2>{category.title}</h2>
+          <p>{category.description}</p>
+          <span className="explore-text">Explore {category.title} →</span> {/* ✅ Changed <a> to <span> */}
+        </div>
+      </a>
+    ))}
+  </div>
+</div>
+
     <br/><br/><br/><br/>
 
 
@@ -288,7 +300,7 @@ const LandingPage = () => {
 
 
 
-    <section className="testimonial-section"  data-aos="fade-up" data-aos-duration="1000">
+    <section className="testimonial-section"  data-aos="fade-up" data-aos-duration="700">
     <h1 className="title">Testimonials</h1>
       <div
         className="testimonial-container"
@@ -309,7 +321,7 @@ const LandingPage = () => {
       </div>
     </section>
     
-    <section className="faq-section"  data-aos="fade-up" data-aos-duration="1000">
+    <section className="faq-section"  data-aos="fade-up" data-aos-duration="700">
   <div className="faq-container">
     <h2 className="faq-title">Frequently Asked Questions</h2>
     <p className="faq-subtitle">

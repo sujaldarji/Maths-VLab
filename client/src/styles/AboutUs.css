@@ -15,6 +15,7 @@
 /* Content Layout */
 .about-content {
     display: flex;
+    color: #333;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
@@ -35,7 +36,7 @@
 
 
 .about-description {
-    font-family: Montserrat, sans-serif;
+    font-family: Georgia, serif;
     font-size: 1.1rem;
     line-height: 1.8;
     text-align: justify;
