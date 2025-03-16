@@ -83,6 +83,7 @@ const AboutUs = () => {
               to modernize math education, making it more hands-on, accessible,
               and enjoyable for students of all levels.
             </p>
+            <p>hi</p>
           </div>
           <div className="story-image">
             <img src={c4} alt="Our Story" loading="lazy" />
@@ -104,9 +105,9 @@ const AboutUs = () => {
       </section>
 
       {/* Core Values Section */}
-      <section className="core-values-section" id="core-values">
-        <h2 className="core-values-heading"  data-aos="fade-up" data-aos-duration="1000">Core Values</h2>
-        <div className="core-values-grid"  data-aos="fade-up" data-aos-duration="1000">
+      <section className="core-values-section" id="core-values"  data-aos="fade-up" data-aos-duration="1000">
+        <h2 className="core-values-heading" >Core Values</h2>
+        <div className="core-values-grid">
           {["Innovation", "Accessibility", "Engagement", "Excellence"].map((value, index) => (
             <div className="core-value-item" key={index}>
               <div className="core-value-header">

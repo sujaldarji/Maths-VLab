@@ -1,8 +1,5 @@
-import sanitizeHtml from "sanitize-html";
+import DOMPurify from "dompurify";
 
 export const sanitizeInput = (input) => {
-    return sanitizeHtml(input, {
-        allowedTags: [], // Remove all HTML tags
-        allowedAttributes: {}, // Remove all attributes
-    }).trim(); // Trim spaces
+    return DOMPurify.sanitize(input).trim(); // Remove unwanted HTML and trim spaces
 };
