@@ -8,17 +8,21 @@
 /* Animated Background */
 @keyframes animatedBackground {
     0% { background-position: 0% 50%; }
+    25% { background-position: 50% 75%; }
     50% { background-position: 100% 50%; }
+    75% { background-position: 50% 25%; }
     100% { background-position: 0% 50%; }
 }
 
-    body {
-        background: linear-gradient(-45deg, #162447, #1B3A73, #23395B, #2C5282);
-        background-size: 300% 300%;
-        animation: animatedBackground 10s ease infinite;
-        font-family: 'Arial', sans-serif;
-        color: rgba(240, 248, 255, 0.95);
-    }
+body {
+    background: linear-gradient(-45deg, #0F2027, #162447, #1B3A73, #23395B, #2C5282, #3E64FF);
+    background-size: 400% 400%;
+    animation: animatedBackground 12s ease-in-out infinite;
+    font-family: 'Poppins', sans-serif;
+    color: rgba(240, 248, 255, 0.98);
+    will-change: background-position;
+}
+
 
 /* Hero Section */
 .hero-section {
