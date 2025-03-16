@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AOS from "aos";
-import "aos/dist/aos.css"; // Import AOS styles
+import "aos/dist/aos.css"; 
 
 import SignUp from './SignUp';
+import ContactUs from './ContactUs';
 import SignIn from './SignIn';
 import ForgetPassword from './ForgetPassword';
 import LandingPage from './LandingPage';
@@ -31,6 +32,7 @@ function App() {
                 <Route path="/resetpassword" element={<ForgetPassword />} />
                 <Route path="/success" element={<Success />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<About />} />
             </Routes>
         </BrowserRouter>
     );

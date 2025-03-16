@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import SignInImage from "./assets/signIn.jpg";
 import "./styles/Auth.css";
-import Logo from "./assets/logo2.png";
+import Logo from "./assets/Logo1.png";
 import { validateEmail, validatePassword } from "./utils/validations.js";
 import { sanitizeInput } from "./utils/sanitize.js";
 

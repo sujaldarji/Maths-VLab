@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import SignUpImage from "./assets/signUp.jpg";
 import "./styles/Auth.css";
-import Logo from "./assets/logo2.png";
+import Logo from "./assets/Logo1.png";
 import { validateName, validateEmail, validatePassword, validateConfirmPassword } from "./utils/validations.js";
 import { sanitizeInput } from "./utils/sanitize"; // Import sanitization function
 

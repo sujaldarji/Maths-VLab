@@ -40,7 +40,8 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    max-width: 600px;
+    max-width: 650px;
+    max-height: 600px;
     background-color: white;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
@@ -86,7 +87,7 @@
   
   /* Form & Inputs */
   h2 {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-size: 26px;
   }
   
