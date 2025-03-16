@@ -20,6 +20,7 @@ app.use(cookieParser());
 
 const PORT = process.env.PORT || 3001;
 
+let server;
 // ! Connect to MongoDB with Error Handling
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
@@ -88,16 +89,16 @@ app.post('/signin', validateSignIn, async (req, res) => {
             return res.status(401).json({ message: "Incorrect password" });
         }
 
-        // * Generate JWT Token
-        const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET, {
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
             expiresIn: process.env.JWT_EXPIRES_IN
         });
+        
 
         // * Set token in HTTP-only cookie
         res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production', // Secure in production
-            sameSite: 'Strict'
+            sameSite: 'Lax'
         });
 
         res.status(200).json({ message: "Login successful" });
@@ -112,10 +113,12 @@ app.get('/success', authenticateUser, (req, res) => {
 });
 
 app.post('/logout', (req, res) => {
-    res.clearCookie('token', {
+    res.cookie('token', '', { // Empty value
         httpOnly: true,
-        sameSite: 'Strict'
+        sameSite: 'Lax',
+        expires: new Date(0) // Expire immediately
     });
     res.status(200).json({ message: "Logged out successfully" });
 });
+
 
