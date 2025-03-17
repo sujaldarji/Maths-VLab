@@ -54,7 +54,7 @@ function SignUp() {
         }
 
         try {
-            await axios.post("http://localhost:3001/register", {
+            await axios.post("http://localhost:3001/api/auth/register", {
                 name: sanitizedData.name,
                 email: sanitizedData.email,
                 password: sanitizedData.password,

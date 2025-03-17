@@ -7,20 +7,44 @@ function Success() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const checkAuth = async () => {
+        const fetchProtectedData = async () => {
             try {
-                const response = await axios.get("http://localhost:3001/success", 
-                    { withCredentials: true } // Ensure cookies are sent
-                );
+                let accessToken = localStorage.getItem("accessToken");
+                
+                if (!accessToken) {
+                    await refreshToken(); // Try refreshing the token
+                    accessToken = localStorage.getItem("accessToken");
+                    
+                    if (!accessToken) {
+                        navigate("/signin");
+                        return;
+                    }
+                }
+
+                const response = await axios.get("/api/user/success", {
+                    headers: { Authorization: `Bearer ${accessToken}` },
+                    withCredentials: true, // To send refresh token cookies
+                });
+
                 setMessage(response.data.message);
             } catch (error) {
                 console.error("Auth Error:", error.response?.data || error);
-                navigate("/signin"); // Redirect to login if not authenticated
+                navigate("/signin"); // Redirect if not authenticated
             }
         };
 
-        checkAuth();
-    }, []);
+        const refreshToken = async () => {
+            try {
+                const response = await axios.post("/api/token/refresh-token", {}, { withCredentials: true });
+                localStorage.setItem("accessToken", response.data.accessToken);
+            } catch (error) {
+                console.error("Refresh Token Error:", error.response?.data || error);
+                localStorage.removeItem("accessToken");
+            }
+        };
+
+        fetchProtectedData();
+    }, [navigate]);
 
     return (
         <div>

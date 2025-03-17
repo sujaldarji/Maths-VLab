@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../api/axiosInstance"; // Use axiosInstance
 import "../styles/Navbar.css";
 import { FaBars, FaTimes } from "react-icons/fa";
 import logo from "../assets/Logo1.png";
@@ -15,10 +15,7 @@ const Navbar = () => {
   // Function to check authentication status
   const checkAuth = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost:3001/api/auth/auth-status", {
-        withCredentials: true, // Ensures cookies are sent
-      });
-
+      const response = await axiosInstance.get("/api/user/auth-status"); // Changed to correct endpoint
       if (response.data.authenticated) {
         setIsAuthenticated(true);
         setUsername(response.data.user.name);
@@ -41,17 +38,15 @@ const Navbar = () => {
   // Handle Logout
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:3001/api/auth/logout", {}, { withCredentials: true });
+      await axiosInstance.post("/api/auth/logout", {}, { withCredentials: true }); // Ensure cookies are cleared
 
       // Clear authentication state
       setIsAuthenticated(false);
       setUsername("");
+      localStorage.removeItem("accessToken");
 
       // Navigate to Sign In page
       navigate("/signin");
-
-      // Ensure auth status is refreshed
-      checkAuth();
     } catch (error) {
       console.error("Logout failed:", error.response?.data || error.message);
     }
