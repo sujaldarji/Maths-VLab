@@ -17,10 +17,15 @@ const onTokenRefreshed = (newAccessToken) => {
     refreshSubscribers = [];
 };
 
+// Function to add failed requests to queue while refreshing
+const addRefreshSubscriber = (callback) => {
+    refreshSubscribers.push(callback);
+};
+
 // Request Interceptor: Attach Access Token
 axiosInstance.interceptors.request.use(
     (config) => {
-        const accessToken = localStorage.getItem("accessToken"); // Get token
+        const accessToken = localStorage.getItem("accessToken");
         if (accessToken) {
             config.headers["Authorization"] = `Bearer ${accessToken}`;
         }
@@ -31,40 +36,44 @@ axiosInstance.interceptors.request.use(
 
 // Response Interceptor: Handle Expired Tokens
 axiosInstance.interceptors.response.use(
-    (response) => response, // If successful, return response
+    (response) => response,
     async (error) => {
         const originalRequest = error.config;
 
-        // If unauthorized (401) & not already trying to refresh
         if (error.response?.status === 401 && !originalRequest._retry) {
             if (isRefreshing) {
-                // Wait for new token if refresh is in progress
-                return new Promise((resolve) => {
-                    refreshSubscribers.push((newToken) => {
-                        originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
-                        resolve(axiosInstance(originalRequest));
+                return new Promise((resolve, reject) => {
+                    addRefreshSubscriber((newToken) => {
+                        if (newToken) {
+                            originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
+                            resolve(axiosInstance(originalRequest));
+                        } else {
+                            reject(error);
+                        }
                     });
                 });
             }
 
-            // Mark request as retried
             originalRequest._retry = true;
             isRefreshing = true;
 
             try {
-                // Request new access token using refresh token
-                const { data } = await axios.post(`${API_BASE_URL}/api/token/refresh-token`, {}, { withCredentials: true });
+                // Refresh Token Request
+                const { data } = await axios.post(`${API_BASE_URL}/api/tokenRoutes/refresh-token`, {}, { withCredentials: true });
 
-                localStorage.setItem("accessToken", data.accessToken); // Store new token
+                localStorage.setItem("accessToken", data.accessToken);
                 axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${data.accessToken}`;
                 
-                onTokenRefreshed(data.accessToken); // Notify subscribers
+                onTokenRefreshed(data.accessToken); // Notify all subscribers
                 
-                return axiosInstance(originalRequest); // Retry failed request
+                return axiosInstance(originalRequest);
             } catch (refreshError) {
                 console.error("Refresh Token Expired. Redirecting to login...");
                 localStorage.removeItem("accessToken");
-                window.location.href = "/signin"; // Redirect to login page
+                
+                onTokenRefreshed(null); // Notify subscribers that refresh failed
+                
+                window.location.href = "/signin"; // Redirect to login
                 return Promise.reject(refreshError);
             } finally {
                 isRefreshing = false;

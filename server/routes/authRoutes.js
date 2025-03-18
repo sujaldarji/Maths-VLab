@@ -2,12 +2,12 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const StudentModel = require("../Models/Student.js");
-const { validateSignUp, validateSignIn } = require("../middlewares/validation.js");
-const { sanitizeInput } = require("../middlewares/sanitize.js");
+const { validateSignUp, validateSignIn } = require("../middlewares/validateMiddleware.js");
+const { sanitizeInput } = require("../middlewares/sanitizeMiddleware.js");
 
 const router = express.Router();
 
-// Generate Access & Refresh Tokens
+// Generate Tokens
 const generateAccessToken = (userId) => {
     return jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN });
 };
@@ -23,8 +23,7 @@ router.post('/register', validateSignUp, async (req, res) => {
         const email = sanitizeInput(req.body.email);
         const password = req.body.password;
 
-        const existingUser = await StudentModel.findOne({ email });
-        if (existingUser) {
+        if (await StudentModel.findOne({ email })) {
             return res.status(400).json({ message: "User already registered" });
         }
 
@@ -33,11 +32,11 @@ router.post('/register', validateSignUp, async (req, res) => {
 
         res.status(201).json({ success: true, message: "User registered successfully. Please sign in." });
     } catch (error) {
+        console.error("Register Error:", error);
         res.status(500).json({ message: "Internal server error" });
     }
 });
 
-// Sign In Endpoint
 // Sign In Endpoint
 router.post('/signin', validateSignIn, async (req, res) => {
     try {
@@ -49,8 +48,7 @@ router.post('/signin', validateSignIn, async (req, res) => {
             return res.status(404).json({ message: "No user found with this email" });
         }
 
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
+        if (!await bcrypt.compare(password, user.password)) {
             return res.status(401).json({ message: "Incorrect password" });
         }
 
@@ -62,19 +60,15 @@ router.post('/signin', validateSignIn, async (req, res) => {
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: "Strict", // More secure
-            path: "/", // Ensure it's accessible site-wide
+            sameSite: "Strict",
+            path: "/",
         });
 
-        res.status(200).json({ 
-            message: "Login successful", 
-            accessToken 
-        });
-
+        res.status(200).json({ message: "Login successful", accessToken });
     } catch (error) {
+        console.error("Sign In Error:", error);
         res.status(500).json({ message: "Internal server error" });
     }
 });
-
 
 module.exports = router;

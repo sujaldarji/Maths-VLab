@@ -1,17 +1,17 @@
 import React ,{ useState, useEffect } from "react";
-import "./styles/landing.css";
+import "../styles/home.css";
 
-import FeatureCard3 from "./assets/FeatureCard3.jpeg";
-import FeatureCard4 from "./assets/FeatureCard4.jpeg";
-import FeatureCard5 from "./assets/FeatureCard5.jpeg";
-import FeatureCard6 from "./assets/FeatureCard6.jpeg";
-import FeatureCard7 from "./assets/FeatureCard7.jpeg";
-import ArithmeticImg from "./assets/ExploreCategories1.jpg";
-import GeometryImg from "./assets/ExploreCategories2.jpg";
-import TrigonometryImg from "./assets/ExploreCategories3.jpg";
-import AlgebraImg from "./assets/ExploreCategories4.jpg";
-import DiscreteImg from "./assets/ExploreCategories5.jpg";
-import CalculusImg from "./assets/ExploreCategories6.jpg";
+import FeatureCard3 from "../assets/FeatureCard3.jpeg";
+import FeatureCard4 from "../assets/FeatureCard4.jpeg";
+import FeatureCard5 from "../assets/FeatureCard5.jpeg";
+import FeatureCard6 from "../assets/FeatureCard6.jpeg";
+import FeatureCard7 from "../assets/FeatureCard7.jpeg";
+import ArithmeticImg from "../assets/ExploreCategories1.jpg";
+import GeometryImg from "../assets/ExploreCategories2.jpg";
+import TrigonometryImg from "../assets/ExploreCategories3.jpg";
+import AlgebraImg from "../assets/ExploreCategories4.jpg";
+import DiscreteImg from "../assets/ExploreCategories5.jpg";
+import CalculusImg from "../assets/ExploreCategories6.jpg";
 
 
 const LandingPage = () => {

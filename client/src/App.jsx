@@ -3,13 +3,13 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AOS from "aos";
 import "aos/dist/aos.css"; 
 
-import SignUp from './SignUp';
-import ContactUs from './ContactUs';
-import SignIn from './SignIn';
-import ForgetPassword from './ForgetPassword';
-import LandingPage from './LandingPage';
-import Success from './success';
-import About from './AboutUs';
+import SignUp from './pages/SignUp';
+import ContactUs from './pages/Contact';
+import SignIn from './pages/SignIn';
+import ForgetPassword from './pages/ForgetPassword';
+import LandingPage from './pages/Home';
+import Success from './pages/success';
+import About from './pages/About';
 import Navbar from "./components/navbar";
 
 function App() {

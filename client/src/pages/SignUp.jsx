@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import SignUpImage from "./assets/signUp.jpg";
-import "./styles/Auth.css";
-import Logo from "./assets/Logo1.png";
-import { validateName, validateEmail, validatePassword, validateConfirmPassword } from "./utils/validations.js";
-import { sanitizeInput } from "./utils/sanitize"; // Import sanitization function
+import SignUpImage from "../assets/signUp.jpg";
+import "../styles/Auth.css";
+import Logo from "../assets/Logo1.png";
+import { validateName, validateEmail, validatePassword, validateConfirmPassword } from "../utils/validate.js";
+import { sanitizeInput } from "../utils/sanitizeInput.js"; // Import sanitization function
 
 function SignUp() {
     const [formData, setFormData] = useState({
@@ -54,7 +54,7 @@ function SignUp() {
         }
 
         try {
-            await axios.post("http://localhost:3001/api/auth/register", {
+            await axios.post("http://localhost:3001/api/authRoutes/register", {
                 name: sanitizedData.name,
                 email: sanitizedData.email,
                 password: sanitizedData.password,

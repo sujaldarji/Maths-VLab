@@ -18,7 +18,7 @@ router.post("/refresh-token", (req, res) => {
 
         const newAccessToken = jwt.sign(
             { userId: decoded.userId },
-            process.env.ACCESS_TOKEN_SECRET, // Use ACCESS_TOKEN_SECRET
+            process.env.ACCESS_TOKEN_SECRET,
             { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN }
         );
 
@@ -32,7 +32,7 @@ router.post("/logout", (req, res) => {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "Lax",
-        path: "/api/auth/refresh-token", // Correct path
+        path: "/",
     });
 
     res.status(200).json({ message: "Logged out successfully" });

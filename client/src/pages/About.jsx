@@ -1,5 +1,5 @@
 import React from "react";
-import "./styles/AboutUs.css";
+import "../styles/AboutUs.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -7,12 +7,13 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 // Import images dynamically
-import c1 from "./assets/1.jpeg";
-import c2 from "./assets/2.jpg";
-import c3 from "./assets/3.jpeg";
-import c4 from "./assets/abc.jpg";
-import c5 from "./assets/logo.png";
-import c6 from "./assets/lg.png";
+import c1 from "../assets/1.jpeg";
+import c2 from "../assets/2.jpg";
+import c3 from "../assets/3.jpeg";
+import c4 from "../assets/abc.jpg";
+import c5 from "../assets/logo.png";
+import c6 from "../assets/lg.png";
+
 
 // Image array for the carousel
 const galleryImages = [c1, c2, c3, c2];
