@@ -1,14 +1,5 @@
 const mongoose = require('mongoose');
 
-/* 
- * ! Student Schema Definition
- * ----------------------------
- * * name: Student's full name (Required)
- * * email: Student's email (Required, Unique, Valid format)
- * * password: Student's hashed password (Required)
- * * timestamps: Automatically adds createdAt & updatedAt fields
- */
-
 const StudentSchema = new mongoose.Schema({
     name: {
         type: String,

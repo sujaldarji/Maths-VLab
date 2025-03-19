@@ -23,3 +23,10 @@ export const validatePassword = (password) => {
 export const validateConfirmPassword = (password, confirmPassword) => {
     return password === confirmPassword ? "" : "Passwords do not match.";
 };
+
+// Validate Message (Min 10 characters, max 1000 characters)
+export const validateMessage = (message) => {
+    return message.trim().length >= 10 && message.trim().length <= 1000 
+        ? "" 
+        : "Message must be between 10 and 1000 characters.";
+};

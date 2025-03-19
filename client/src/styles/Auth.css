@@ -63,8 +63,8 @@
   }
   
   .left-panel img {
-    width: 100%;  /* Fill full width of panel */
-    height: 100%; /* Fill full height of panel */
+    /* width: 100%;  Fill full width of panel */
+    /* height: 100%; Fill full height of panel */
     object-fit: cover; /* Ensures full image is visible */
     border-radius: 8px; /* Optional: Adds rounded corners */
   }

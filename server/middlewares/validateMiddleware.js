@@ -38,4 +38,29 @@ const validateSignIn = [
     }
 ];
 
-module.exports = { validateSignUp, validateSignIn };
+const validateContactForm = [
+    body("name")
+        .trim()
+        .isLength({ min: 3, max: 50 })
+        .withMessage("Name should be 3 to 50 characters long.")
+        .matches(/^[A-Za-z\s]+$/)
+        .withMessage("Name should contain only alphabets and spaces."),
+    body("email")
+        .trim()
+        .isEmail()
+        .withMessage("Invalid email format."),
+    body("message")
+        .trim()
+        .isLength({ min: 10, max: 1000 })
+        .withMessage("Message should be between 10 to 1000 characters."),
+    (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        next();
+    }
+];
+
+module.exports = { validateSignUp, validateSignIn, validateContactForm };
+

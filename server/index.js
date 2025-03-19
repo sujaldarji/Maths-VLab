@@ -7,6 +7,7 @@ require('dotenv').config();
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const tokenRoutes = require("./routes/tokenRoutes");
+const contactRoutes = require("./routes/contactRoutes");
 
 const app = express();
 
@@ -61,6 +62,7 @@ process.on("SIGTERM", shutdown);
 app.use("/api/authRoutes", authRoutes);
 app.use("/api/userRoutes", userRoutes);
 app.use("/api/tokenRoutes", tokenRoutes);
+app.use("/api/contactRoutes", contactRoutes);
 
 // Global Error Handling Middleware
 app.use((err, req, res, next) => {

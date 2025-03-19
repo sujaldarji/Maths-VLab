@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import SignUpImage from "../assets/signUp.jpg";
+import SignUpImage from "../assets/SignUp.jpg";
 import "../styles/Auth.css";
 import Logo from "../assets/Logo1.png";
 import { validateName, validateEmail, validatePassword, validateConfirmPassword } from "../utils/validate.js";

@@ -5,20 +5,44 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { FaLinkedin, FaGithub, FaInstagram, FaLightbulb, FaUniversalAccess, FaHandHoldingHeart, FaStar } from "react-icons/fa";
+
 
 // Import images dynamically
-import c1 from "../assets/1.jpeg";
-import c2 from "../assets/2.jpg";
-import c3 from "../assets/3.jpeg";
-import c4 from "../assets/abc.jpg";
-import c5 from "../assets/logo.png";
+import c1 from "../assets/AboutUs1.jpg";
+import c2 from "../assets/AboutUs2.jpeg";
+import c3 from "../assets/AboutUs3.jpg";
+import c4 from "../assets/AboutUs4.jpeg";
 import c6 from "../assets/lg.png";
 
 
 // Image array for the carousel
-const galleryImages = [c1, c2, c3, c2];
+const galleryImages = [c1, c2, c3, c4];
 
 const AboutUs = () => {
+
+  const coreValues = [
+    {
+      title: "Innovation",
+      description: "Embracing technology to create dynamic and interactive learning experiences.",
+      icon: <FaLightbulb className="core-value-icon" />,
+    },
+    {
+      title: "Accessibility",
+      description: "Ensuring every student has access to high-quality math education.",
+      icon: <FaUniversalAccess className="core-value-icon" />,
+    },
+    {
+      title: "Engagement",
+      description: "Encouraging active participation through engaging content and tools.",
+      icon: <FaHandHoldingHeart className="core-value-icon" />,
+    },
+    {
+      title: "Excellence",
+      description: "Striving for the highest standards in educational content and delivery.",
+      icon: <FaStar className="core-value-icon" />,
+    },
+  ];
   return (
     <React.Fragment>
       {/* About Section */}
@@ -106,28 +130,20 @@ const AboutUs = () => {
       </section>
 
       {/* Core Values Section */}
-      <section className="core-values-section" id="core-values"  data-aos="fade-up" data-aos-duration="1000">
-        <h2 className="core-values-heading" >Core Values</h2>
-        <div className="core-values-grid">
-          {["Innovation", "Accessibility", "Engagement", "Excellence"].map((value, index) => (
-            <div className="core-value-item" key={index}>
-              <div className="core-value-header">
-                <img src={c5} alt={`${value} Logo`} className="core-value-icon" />
-                <h4 className="core-value-title">{value}</h4>
-              </div>
-              <p className="core-value-description">
-                {value === "Innovation"
-                  ? "Embracing technology to create dynamic and interactive learning experiences."
-                  : value === "Accessibility"
-                  ? "Ensuring every student has access to high-quality math education."
-                  : value === "Engagement"
-                  ? "Encouraging active participation through engaging content and tools."
-                  : "Striving for the highest standards in educational content and delivery."}
-              </p>
+      <section className="core-values-section" id="core-values" data-aos="fade-up" data-aos-duration="1000">
+      <h2 className="core-values-heading">Core Values</h2>
+      <div className="core-values-grid">
+        {coreValues.map((value, index) => (
+          <div className="core-value-item" key={index}>
+            <div className="core-value-header">
+              {value.icon}  {/* Displays the corresponding icon */}
+              <h4 className="core-value-title">{value.title}</h4>
             </div>
-          ))}
-        </div>
-      </section>
+            <p className="core-value-description">{value.description}</p>
+          </div>
+        ))}
+      </div>
+    </section>
 
       {/* Our Team Section */}
       <section className="team-section" >
@@ -146,9 +162,9 @@ const AboutUs = () => {
                 <i>{member.role}</i>
               </h6>
               <div className="social-icons">
-                <a href="#"><i className="fa fa-facebook"></i></a>
-                <a href="#"><i className="fa fa-twitter"></i></a>
-                <a href="#"><i className="fa fa-instagram"></i></a>
+                <a href="#"><i className="fa fa-facebook"><FaGithub size={32} /></i></a>
+                <a href="#"><i className="fa fa-twitter"><FaInstagram size={30} /></i></a>
+                <a href="#"><i className="fa fa-instagram"><FaLinkedin size={30} /></i></a>
                 <a href="#"><i className="fa fa-linkedin"></i></a>
               </div>
             </div>
