@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance.js";
-import SignInImage from "../assets/signIn.jpg";
-import "../styles/Auth.css";
-import Logo from "../assets/Logo1.png";
+import SignInImage from "../assets/loginimg.jpg";
+import "../styles/signin.css";
+import Logo from "../assets/Logo2.png";
 import { validateEmail, validatePassword } from "../utils/validate.js";
 import { sanitizeInput } from "../utils/sanitizeInput.js";
 
@@ -16,14 +16,12 @@ function SignIn() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    // Handle Email Input Change
     const handleEmailChange = (e) => {
         const sanitizedEmail = sanitizeInput(e.target.value.trim());
         setEmail(sanitizedEmail);
         setErrors((prev) => ({ ...prev, email: validateEmail(sanitizedEmail) }));
     };
 
-    // Handle Password Input Change (NO LIVE VALIDATION)
     const handlePasswordChange = (e) => {
         setPassword(e.target.value.trim());
     };
@@ -34,13 +32,11 @@ function SignIn() {
         setSuccessMessage("");
         setLoading(true);
 
-        // Perform validation on submit
         const newErrors = {
             email: validateEmail(email),
-            password: validatePassword(password), // Validate password only here
+            password: validatePassword(password),
         };
 
-        // If there are validation errors, prevent submission
         if (Object.values(newErrors).some((error) => error !== "")) {
             setErrors(newErrors);
             setLoading(false);
@@ -60,7 +56,7 @@ function SignIn() {
             }
 
             setSuccessMessage("✅ Login successful! Redirecting...");
-            setTimeout(() => navigate("/success"), 2000); 
+            setTimeout(() => navigate("/success"), 2000);
         } catch (error) {
             setErrorMessage(error.response?.data?.message || "⚠️ Server error! Please try again later.");
         } finally {
@@ -69,14 +65,14 @@ function SignIn() {
     };
 
     return (
-        <div className="auth-container" data-aos="fade-up" data-aos-duration="1000">
-            <div className="auth-box">
-                <div className="left-panel">
+        <div className="signin-container">
+            <div className="signin-box">
+                <div className="signin-image-container">
                     <img src={SignInImage} alt="Illustration" />
                 </div>
 
-                <div className="right-panel">
-                    <img src={Logo} alt="Project Logo" className="logo" />
+                <div className="signin-form">
+                    <img src={Logo} alt="Project Logo" className="signin-logo" />
                     <h2>Welcome Back!</h2>
 
                     {errorMessage && <p className="error-message">{errorMessage}</p>}
@@ -101,17 +97,17 @@ function SignIn() {
                             onChange={handlePasswordChange}
                             required
                         />
-                        {errors.password && <p className="error-text">{errors.password}</p>} 
+                        {errors.password && <p className="error-text">{errors.password}</p>}
 
-                        <button type="submit" className="btn" disabled={loading}>
+                        <button type="submit" className="signin-btn" disabled={loading}>
                             {loading ? <span className="spinner"></span> : "Login"}
                         </button>
                     </form>
 
-                    <p>
-                        Don't have an account yet? <Link to="/register" className="link">Sign Up</Link>
+                    <p className="back-to-login">
+                        Don't have an account? <Link to="/register" className="link">Sign Up</Link>
                     </p>
-                    <p>
+                    <p >
                         <Link to="/resetpassword" className="link">Forgot Password?</Link>
                     </p>
                 </div>

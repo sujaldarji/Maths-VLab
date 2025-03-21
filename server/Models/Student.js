@@ -21,6 +21,14 @@ const StudentSchema = new mongoose.Schema({
         required: [true, "Password is required"],
         minlength: [6, "Password must be at least 6 characters"],
     },
+    resetToken: { 
+        type: String, 
+        default: null // ✅ Stores the password reset token
+    },
+    resetTokenExpiry: { 
+        type: Date, 
+        default: null // ✅ Expiration time for reset link
+    },
 }, { timestamps: true });
 
 

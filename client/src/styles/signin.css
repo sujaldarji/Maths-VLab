@@ -1,0 +1,158 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+/* Background */
+.signin-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #4f46e5, #6b5dfc);
+    /* background-color: rgba(255, 255, 255, 0); */
+    padding: 20px;
+}
+
+/* Sign In Box */
+.signin-box {
+    display: flex;
+    background: white;
+    width: 850px;  /* ✅ Increased width */
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0px 10px 40px rgba(203, 198, 198, 0.732);
+}
+
+/* Left Side - Image */
+.signin-image-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background: #6b5dfc; */
+    padding: 20px;
+}
+
+.signin-image-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Right Side - Form */
+.signin-form {
+    flex: 1;
+    padding: 40px;
+    text-align: center;
+}
+
+/* Logo Formatting */
+.signin-logo {
+    width: 220px;  /* ✅ Increased size */
+    height: auto;
+    margin-bottom: 5px;
+}
+
+/* Heading */
+h2 {
+    color: #4f46e5;
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+/* Success/Error Messages */
+.error-message, .success-message {
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.error-message {
+    color: #e60000;
+    background: rgba(230, 0, 0, 0.1);
+}
+
+.success-message {
+    color: #4f46e5;
+    background: rgba(79, 70, 229, 0.1);
+}
+
+/* Input Fields */
+input {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #ddd;
+    background: #f9f9f9;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    margin-bottom: 15px;
+    transition: border 0.3s ease-in-out;
+}
+
+input::placeholder {
+    color: #aaa;
+}
+
+input:focus {
+    border-color: #4f46e5;
+}
+
+/* Login Button */
+.signin-btn {
+    width: 100%;
+    padding: 14px;
+    background: #ff6600; /* ✅ Changed color */
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.signin-btn:hover {
+    background: #e65c00; /* Darker shade on hover */
+    transform: scale(1.05);
+}
+
+/* Forgot Password & Sign Up Links */
+.link {
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .signin-box {
+        flex-direction: column;
+        width: 90%;
+    }
+
+    .signin-image-container {
+        display: none; /* Hide image on smaller screens */
+    }
+
+    .signin-form {
+        padding: 20px;
+    }
+    .back-to-login{
+        font-size: 12px;
+     }
+ 
+}
+p {
+    color: #555;
+    font-size: 14px;
+    margin: 20px;
+}

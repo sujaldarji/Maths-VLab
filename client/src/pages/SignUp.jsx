@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import SignUpImage from "../assets/SignUp.jpg";
-import "../styles/Auth.css";
-import Logo from "../assets/Logo1.png";
+import SignUpImage from "../assets/signupimage.jpg";
+import "../styles/signup.css"; // Assuming this CSS file is updated for the new design
+import Logo from "../assets/Logo2.png";
 import { validateName, validateEmail, validatePassword, validateConfirmPassword } from "../utils/validate.js";
 import { sanitizeInput } from "../utils/sanitizeInput.js"; // Import sanitization function
 
@@ -19,19 +19,19 @@ function SignUp() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    // * Handle input change
+    // Handle input change
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    // ! Handle Form Submission
+    // Handle Form Submission
     const handleSubmit = async (event) => {
         event.preventDefault();
         setSuccessMessage("");
         setErrors({});
         setLoading(true);
 
-        // * Sanitize inputs before validation
+        // Sanitize inputs before validation
         const sanitizedData = {
             name: sanitizeInput(formData.name.trim()),
             email: sanitizeInput(formData.email.trim()),
@@ -39,7 +39,7 @@ function SignUp() {
             confirmPassword: formData.confirmPassword,
         };
 
-        // * Perform validation
+        // Perform validation
         const newErrors = {
             name: validateName(sanitizedData.name),
             email: validateEmail(sanitizedData.email),
@@ -72,16 +72,16 @@ function SignUp() {
     };
 
     return (
-        <div className="auth-container"  data-aos="fade-up" data-aos-duration="1000">
-            <div className="auth-box">
+        <div className="signup-container">
+            <div className="signup-box">
                 {/* Left Panel with Image */}
-                <div className="left-panel">
+                <div className="signup-left-panel">
                     <img src={SignUpImage} alt="Illustration" />
                 </div>
 
                 {/* Right Panel with Sign-up Form */}
-                <div className="right-panel">
-                    <img src={Logo} alt="Project Logo" className="logo" />
+                <div className="signup-right-panel">
+                    <img src={Logo} alt="Project Logo" className="signup-logo" />
                     <h2>Create an Account</h2>
 
                     {errors.form && <p className="error-message">{errors.form}</p>}
@@ -92,49 +92,51 @@ function SignUp() {
                         <input 
                             type="text" 
                             name="name" 
-                            placeholder="Full Name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            required
+                            placeholder="Full Name" 
+                            value={formData.name} 
+                            onChange={handleChange} 
+                            required 
                         />
                         {errors.name && <p className="error-message">{errors.name}</p>}
 
                         <input 
                             type="email" 
                             name="email" 
-                            placeholder="Email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
+                            placeholder="Email" 
+                            value={formData.email} 
+                            onChange={handleChange} 
+                            required 
                         />
                         {errors.email && <p className="error-message">{errors.email}</p>}
 
                         <input 
                             type="password" 
                             name="password" 
-                            placeholder="Password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
+                            placeholder="Password" 
+                            value={formData.password} 
+                            onChange={handleChange} 
+                            required 
                         />
                         {errors.password && <p className="error-message">{errors.password}</p>}
 
                         <input 
                             type="password" 
                             name="confirmPassword" 
-                            placeholder="Confirm Password"
-                            value={formData.confirmPassword}
-                            onChange={handleChange}
-                            required
+                            placeholder="Confirm Password" 
+                            value={formData.confirmPassword} 
+                            onChange={handleChange} 
+                            required 
                         />
                         {errors.confirmPassword && <p className="error-message">{errors.confirmPassword}</p>}
 
-                        <button type="submit" className="btn" disabled={loading}>
-                            {loading ? <span className="spinner"></span> : "Sign Up"}
+                        <button type="submit" className="signup-btn" disabled={loading}>
+                            {loading ? "Signing Up..." : "Sign Up"}
                         </button>
                     </form>
 
-                    <p>Already have an account? <Link to="/signin" className="link">Sign In</Link></p>
+                    <p className="back-to-login">
+                        Already have an account? <Link to="/signin" className="link" >Sign In</Link>
+                    </p>
                 </div>
             </div>
         </div>
