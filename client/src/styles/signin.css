@@ -1,38 +1,28 @@
-/* General Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
-}
-/* Background */
+/* Sign-In Page Container */
 .signin-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(135deg, #4f46e5, #6b5dfc);
-    /* background-color: rgba(255, 255, 255, 0); */
     padding: 20px;
 }
 
-/* Sign In Box */
+/* Sign-In Box */
 .signin-box {
     display: flex;
     background: white;
-    width: 850px;  /* ✅ Increased width */
+    width: 850px;
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0px 10px 40px rgba(203, 198, 198, 0.732);
 }
 
-/* Left Side - Image */
+/* Left Panel - Image */
 .signin-image-container {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background: #6b5dfc; */
     padding: 20px;
 }
 
@@ -42,29 +32,30 @@
     border-radius: 10px;
 }
 
-/* Right Side - Form */
+/* Right Panel - Form */
 .signin-form {
     flex: 1;
     padding: 40px;
     text-align: center;
 }
 
-/* Logo Formatting */
-.signin-logo {
-    width: 220px;  /* ✅ Increased size */
+/* Logo */
+.signin-form .signin-logo {
+    width: 220px;
     height: auto;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
-/* Heading */
-h2 {
+/* Form Title */
+.signin-form h2 {
     color: #4f46e5;
     font-size: 28px;
     margin-bottom: 10px;
 }
 
-/* Success/Error Messages */
-.error-message, .success-message {
+/* Error & Success Messages */
+.signin-form .error-message,
+.signin-form .success-message {
     font-size: 14px;
     font-weight: bold;
     padding: 10px;
@@ -72,18 +63,18 @@ h2 {
     margin-bottom: 15px;
 }
 
-.error-message {
+.signin-form .error-message {
     color: #e60000;
     background: rgba(230, 0, 0, 0.1);
 }
 
-.success-message {
-    color: #4f46e5;
-    background: rgba(79, 70, 229, 0.1);
+.signin-form .success-message {
+    color: #28a745;
+    background: rgba(40, 167, 69, 0.1);
 }
 
 /* Input Fields */
-input {
+.signin-form input {
     width: 100%;
     padding: 14px;
     border: 2px solid #ddd;
@@ -95,19 +86,19 @@ input {
     transition: border 0.3s ease-in-out;
 }
 
-input::placeholder {
+.signin-form input::placeholder {
     color: #aaa;
 }
 
-input:focus {
+.signin-form input:focus {
     border-color: #4f46e5;
 }
 
-/* Login Button */
-.signin-btn {
+/* Sign-In Button */
+.signin-form .signin-btn {
     width: 100%;
     padding: 14px;
-    background: #ff6600; /* ✅ Changed color */
+    background: #ff6600;
     color: white;
     font-size: 16px;
     border: none;
@@ -116,20 +107,27 @@ input:focus {
     transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
 }
 
-.signin-btn:hover {
-    background: #e65c00; /* Darker shade on hover */
+.signin-form .signin-btn:hover {
+    background: #e65c00;
     transform: scale(1.05);
 }
 
-/* Forgot Password & Sign Up Links */
-.link {
+/* Links: Forgot Password & Sign Up */
+.signin-form .link {
     color: #4f46e5;
     text-decoration: none;
     font-weight: bold;
 }
 
-.link:hover {
+.signin-form .link:hover {
     text-decoration: underline;
+}
+
+/* Additional Text */
+.signin-form p {
+    color: #555;
+    font-size: 14px;
+    margin: 15px 0;
 }
 
 /* Responsive Design */
@@ -146,13 +144,8 @@ input:focus {
     .signin-form {
         padding: 20px;
     }
-    .back-to-login{
+
+    .signin-form .back-to-login {
         font-size: 12px;
-     }
- 
-}
-p {
-    color: #555;
-    font-size: 14px;
-    margin: 20px;
+    }
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../styles/forgetpasd.css";
+import "../styles/forgetpassword.css";
 import Logo from '../assets/logo2.png';
 import fvector from '../assets/fpwd.jpg';
 import axios from "axios";
