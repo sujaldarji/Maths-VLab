@@ -5,6 +5,7 @@
     align-items: center;
     height: 100vh;
     padding: 20px;
+    background: linear-gradient(135deg, #4f46e5, #6b5dfc);
 }
 
 /* Sign-In Box */

@@ -11,7 +11,9 @@ const tokenRoutes = require("./routes/tokenRoutes");
 const contactRoutes = require("./routes/contactRoutes");
 const crypto = require("crypto"); // For generating unique reset tokens
 const nodemailer = require("nodemailer");
-const sendResetEmail = require("./config/sendMail");
+// const sendResetEmail = require("./config/sendMail");
+const { sendResetEmail } = require("./config/sendMail"); // ✅ Correct Import
+
 const bcrypt = require('bcryptjs'); // Import bcrypt for password hashing
 
 const app = express();
