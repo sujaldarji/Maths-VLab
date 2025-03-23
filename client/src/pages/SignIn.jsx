@@ -56,7 +56,7 @@ function SignIn() {
             }
 
             setSuccessMessage("✅ Login successful! Redirecting...");
-            setTimeout(() => navigate("/success"), 2000);
+            setTimeout(() => navigate("/dashboard"), 2000);
         } catch (error) {
             setErrorMessage(error.response?.data?.message || "⚠️ Server error! Please try again later.");
         } finally {

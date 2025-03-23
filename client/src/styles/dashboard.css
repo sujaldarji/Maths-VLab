@@ -1,0 +1,205 @@
+/* General Layout */
+.dashboard-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Content Fix */
+.dashboard-content {
+    flex-grow: 1;
+    margin-left: 250px;
+    padding: 20px;
+    background: #f8f9fa;
+    transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
+/* Ensure Content Expands Fully When Sidebar is Closed */
+.sidebar.closed ~ .dashboard-content {
+    margin-left: 0;
+    width: 100%;
+}
+
+/* Dashboard Title */
+.dashboard-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Search Bar */
+.search-bar {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    outline: none;
+    transition: border-color 0.3s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.search-bar:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+}
+
+/* Filters & Controls */
+.dashboard-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+/* Difficulty Filter Buttons */
+.filter-options {
+    display: flex;
+    gap: 10px;
+}
+
+.filter-btn {
+    padding: 10px 15px;
+    font-size: 14px;
+    border: 2px solid #007bff;
+    background: white;
+    color: #007bff;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: #007bff;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.2);
+}
+
+/* Topics Grid */
+.topics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* Topic Card */
+.topic-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+/* Hover Effect for Topic Cards */
+.topic-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Topic Title */
+.topic-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 8px;
+}
+
+/* Topic Description */
+.topic-description {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.4;
+}
+
+/* Topic Footer (Difficulty Badge + Category) */
+.topic-footer {
+    margin-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Difficulty Badges */
+.difficulty-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 20px;
+    text-transform: uppercase;
+    min-width: 100px;
+}
+
+/* Colors for Difficulty Levels */
+.beginner {
+    background-color: #27ae60;
+    color: white;
+}
+
+.intermediate {
+    background-color: #f39c12;
+    color: white;
+}
+
+.advanced {
+    background-color: #c0392b;
+    color: white;
+}
+
+/* Category Name */
+.category-name {
+    font-size: 12px;
+    color: #777;
+}
+
+/* No Results Message */
+.no-results {
+    text-align: center;
+    font-size: 18px;
+    color: #555;
+    font-weight: 500;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    opacity: 0.8;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dashboard-container {
+        margin-left: 0;
+        padding: 15px;
+    }
+    
+    .dashboard-content {
+        margin-left: 0;
+    }
+
+    .dashboard-controls {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .topics-grid {
+        grid-template-columns: 1fr;
+    }
+}

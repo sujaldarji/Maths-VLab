@@ -3,18 +3,16 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
-const StudentModel = require('./Models/Student');
+const crypto = require("crypto");
+const bcrypt = require('bcryptjs');
+const nodemailer = require("nodemailer");
 
+const StudentModel = require('./Models/Student');
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const tokenRoutes = require("./routes/tokenRoutes");
 const contactRoutes = require("./routes/contactRoutes");
-const crypto = require("crypto"); // For generating unique reset tokens
-const nodemailer = require("nodemailer");
-// const sendResetEmail = require("./config/sendMail");
-const { sendResetEmail } = require("./config/sendMail"); // ✅ Correct Import
-
-const bcrypt = require('bcryptjs'); // Import bcrypt for password hashing
+const { sendResetEmail } = require("./config/sendMail");
 
 const app = express();
 
