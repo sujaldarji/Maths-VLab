@@ -11,6 +11,7 @@ import LandingPage from './pages/Home';
 import Success from './pages/success';
 import About from './pages/About';
 import Navbar from "./components/navbar";
+import ResetPassword from "./pages/ResetPassword"; 
 
 function App() {
     useEffect(() => {
@@ -33,6 +34,8 @@ function App() {
                 <Route path="/success" element={<Success />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<ContactUs />} />
+                  {/* <Route path="/reset-password/:token" element={<ResetPassword />} /> */}
+                <Route path="/reset-password" element={<ResetPassword />} />
             </Routes>
         </BrowserRouter>
     );

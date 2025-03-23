@@ -1,0 +1,151 @@
+/* Sign-In Page Container */
+.signin-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+}
+
+/* Sign-In Box */
+.signin-box {
+    display: flex;
+    background: white;
+    width: 850px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0px 10px 40px rgba(203, 198, 198, 0.732);
+}
+
+/* Left Panel - Image */
+.signin-image-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.signin-image-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Right Panel - Form */
+.signin-form {
+    flex: 1;
+    padding: 40px;
+    text-align: center;
+}
+
+/* Logo */
+.signin-form .signin-logo {
+    width: 220px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+/* Form Title */
+.signin-form h2 {
+    color: #4f46e5;
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+/* Error & Success Messages */
+.signin-form .error-message,
+.signin-form .success-message {
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.signin-form .error-message {
+    color: #e60000;
+    background: rgba(230, 0, 0, 0.1);
+}
+
+.signin-form .success-message {
+    color: #28a745;
+    background: rgba(40, 167, 69, 0.1);
+}
+
+/* Input Fields */
+.signin-form input {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #ddd;
+    background: #f9f9f9;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    margin-bottom: 15px;
+    transition: border 0.3s ease-in-out;
+}
+
+.signin-form input::placeholder {
+    color: #aaa;
+}
+
+.signin-form input:focus {
+    border-color: #4f46e5;
+}
+
+/* Sign-In Button */
+.signin-form .signin-btn {
+    width: 100%;
+    padding: 14px;
+    background: #ff6600;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.signin-form .signin-btn:hover {
+    background: #e65c00;
+    transform: scale(1.05);
+}
+
+/* Links: Forgot Password & Sign Up */
+.signin-form .link {
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signin-form .link:hover {
+    text-decoration: underline;
+}
+
+/* Additional Text */
+.signin-form p {
+    color: #555;
+    font-size: 14px;
+    margin: 15px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .signin-box {
+        flex-direction: column;
+        width: 90%;
+    }
+
+    .signin-image-container {
+        display: none; /* Hide image on smaller screens */
+    }
+
+    .signin-form {
+        padding: 20px;
+    }
+
+    .signin-form .back-to-login {
+        font-size: 12px;
+    }
+}

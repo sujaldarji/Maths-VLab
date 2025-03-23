@@ -3,11 +3,18 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
+const StudentModel = require('./Models/Student');
 
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const tokenRoutes = require("./routes/tokenRoutes");
 const contactRoutes = require("./routes/contactRoutes");
+const crypto = require("crypto"); // For generating unique reset tokens
+const nodemailer = require("nodemailer");
+// const sendResetEmail = require("./config/sendMail");
+const { sendResetEmail } = require("./config/sendMail"); // ✅ Correct Import
+
+const bcrypt = require('bcryptjs'); // Import bcrypt for password hashing
 
 const app = express();
 
@@ -68,4 +75,92 @@ app.use("/api/contactRoutes", contactRoutes);
 app.use((err, req, res, next) => {
     console.error("🔥 Server Error:", err);
     res.status(500).json({ message: "Internal Server Error" });
+});
+
+//reset password codes
+
+// Store reset tokens (in-memory for now, better to store in DB)
+const resetTokens = new Map();
+
+// Forgot Password Endpoint
+app.post('/api/send-reset-link', async (req, res) => {
+    const { email } = req.body;
+
+    // try {
+    //     // Check if the user exists
+    //     const user = await StudentModel.findOne({ email });
+    //     if (!user) {
+    //         return res.status(404).json({ message: "No user found with this email" });
+    //     }
+
+    //     // Generate reset token
+    //     const resetToken = crypto.randomBytes(32).toString("hex");
+    //     resetTokens.set(resetToken, email); // Store token in memory
+
+    //     // Send email with reset link
+    //     const resetLink = `http://localhost:5173/reset-password/token=${resetToken}`;
+    //     await sendResetEmail(email, resetLink);
+
+    //     res.status(200).json({ message: "Reset link sent successfully" });
+
+    // } catch (error) {
+    //     console.error("Error sending reset link:", error);
+    //     res.status(500).json({ message: "Internal server error" });
+    // }
+    try {
+        const { email } = req.body;
+        const user = await StudentModel.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({ message: "No user found with this email" });
+        }
+
+        // ✅ Generate Secure Token
+        const resetToken = crypto.randomBytes(32).toString("hex");
+
+        // ✅ Set Expiry (15 minutes from now)
+        const resetTokenExpiry = Date.now() + 15 * 60 * 1000;
+
+        // ✅ Update User in Database
+        await StudentModel.updateOne(
+            { email },
+            { $set: { resetToken, resetTokenExpiry } }
+        );
+
+        // ✅ Send Reset Email (Modify `sendResetEmail` function accordingly)
+        sendResetEmail(user.email, resetToken);
+
+        res.status(200).json({ message: "Reset link sent to your email!" });
+
+    } catch (error) {
+        console.error("Forgot Password Error:", error);
+        res.status(500).json({ message: "Something went wrong" });
+    }
+});
+
+// Reset Password Endpoint
+app.post("/api/reset-password", async (req, res) => {
+    try {
+        const { token, password } = req.body;
+
+        // Find user with matching token
+        const user = await StudentModel.findOne({ resetToken: token, resetTokenExpiry: { $gt: Date.now() } });
+
+        if (!user) {
+            return res.status(400).json({ message: "Invalid or expired token" });
+        }
+
+        // Hash the new password
+        const hashedPassword = await bcrypt.hash(password, 10);
+        user.password = hashedPassword;
+        user.resetToken = null;  // Remove the token after use
+        user.resetTokenExpiry = null;
+        await user.save();
+
+        res.status(200).json({ message: "Password reset successful" });
+
+    } catch (error) {
+        console.error("Reset Password Error:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
 });
