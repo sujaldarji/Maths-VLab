@@ -1,6 +1,6 @@
 # Maths-VLab
 
-**[MATH-VLAB EDUCATION PLATFORM (MERN App) Website Link](https://yourwebsite.com)**
+**[MATH-VLAB EDUCATION PLATFORM (MERN App)](https://yourwebsite.com)**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/Node-%3E%3D12-blue.svg)](https://nodejs.org/)
