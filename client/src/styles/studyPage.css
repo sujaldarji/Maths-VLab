@@ -21,11 +21,11 @@ body, html {
 
 /* Container that holds the tab content */
 .study-page-content {
-  max-width: 1000px;
-  width: 90%;
+  /* max-width: 1000px; */
+  width: 100%;
   background-color: #fff;
   color: #000;
-  border-radius: 8px;
+  /* border-radius: 8px; */
   padding: 30px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   overflow: hidden; /* Prevents text overflow */

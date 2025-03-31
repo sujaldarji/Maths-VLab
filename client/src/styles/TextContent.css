@@ -3,7 +3,7 @@
   max-width: 100%;
   background: #05b2e6;
   margin: 20px auto;
-  padding: 20px;
+  padding: 10px;
   border-radius: 12px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border: 1px solid #e0e0e0;
@@ -11,7 +11,7 @@
 }
 
 .text-content-container:hover {
-  transform: translateY(-2px);
+  /* transform: translateY(-2px); */
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
 }
 
@@ -133,7 +133,7 @@
 
       
         .container {
-            max-width: 900px;
+            max-width: 100%;
             margin: auto;
             background: white;
             padding: 20px;
@@ -203,3 +203,7 @@
               font-size: 12px;
           }
       }
+      .hidden {
+        display: none;
+      }
+      

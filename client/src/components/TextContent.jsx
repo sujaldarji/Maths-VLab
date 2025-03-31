@@ -7,6 +7,7 @@ const TextContent = ({ refId }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+
   useEffect(() => {
     if (refId) {
       setLoading(true);
@@ -57,6 +58,72 @@ const TextContent = ({ refId }) => {
       window.MathJax.typesetPromise();
     }
   }, [content]);
+//floating toc
+//functio for toc
+// useEffect(() => {
+//   const tocButton = document.querySelector("#toggle-toc");
+//   const tocContent = document.querySelector("#table-of-contents");
+
+//   if (tocButton && tocContent) {
+//     tocButton.onclick = () => {
+//       tocContent.classList.toggle("active"); // Use class-based toggle
+//     };
+//   }
+// }, [content]); // Runs when content updates
+// useEffect(() => {
+//   const tocButton = document.querySelector("#toggle-toc");
+//   const tocContent = document.querySelector("#table-of-contents");
+  
+
+//   if (tocButton && tocContent) {
+//     const toggleToC = () => {
+//       tocContent.classList.toggle("active");
+//     };
+
+//     // Remove existing event listener before adding a new one (to avoid duplication)
+//     tocButton.removeEventListener("click", toggleToC);
+//     tocButton.addEventListener("click", toggleToC);
+
+//     // Cleanup function to remove the listener when component unmounts or updates
+//     return () => {
+//       tocButton.removeEventListener("click", toggleToC);
+//     };
+//   }
+// }, [content]); // Runs whenever content updates
+
+useEffect(() => {
+  const tocButton = document.querySelector("#toggle-toc");
+  const tocContent = document.querySelector("#table-of-contents");
+  const closeTocButton = document.getElementById("close-toc");
+
+  if (tocButton && tocContent) {
+    const toggleToC = () => {
+      tocContent.classList.toggle("active");
+    };
+
+    tocButton.removeEventListener("click", toggleToC);
+    tocButton.addEventListener("click", toggleToC);
+
+    // Handle closing when clicking the "X" button
+    if (closeTocButton) {
+      const closeToC = () => {
+        tocContent.classList.remove("active"); // Ensures ToC only closes
+      };
+
+      closeTocButton.removeEventListener("click", closeToC);
+      closeTocButton.addEventListener("click", closeToC);
+
+      return () => {
+        tocButton.removeEventListener("click", toggleToC);
+        closeTocButton.removeEventListener("click", closeToC);
+      };
+    }
+
+    return () => {
+      tocButton.removeEventListener("click", toggleToC);
+    };
+  }
+}, [content]); 
 
   if (loading) {
     return <div className="text-content">Loading text content...</div>;
@@ -79,6 +146,7 @@ const TextContent = ({ refId }) => {
       ></div>
     </div>
   );
+
 };
 
 export default TextContent;
