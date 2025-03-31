@@ -1,0 +1,36 @@
+.game-content {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff3cd; 
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  border-left: 5px solid #ffa000;
+}
+
+.game-wrapper {
+  max-width: 900px;
+  margin: 20px auto;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease; /* Smooth hover effect */
+}
+
+.game-wrapper:hover {
+  transform: scale(1.02); /* Slight scale-up on hover for interactivity */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .game-content {
+    padding: 15px;
+    margin: 10px;
+  }
+
+  .game-wrapper {
+    max-width: 100%;
+    margin: 15px auto;
+  }
+}

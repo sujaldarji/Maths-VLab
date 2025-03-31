@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 
 
@@ -542,3 +543,549 @@
         font-size: 2rem;
     }
 }
+=======
+
+
+
+.about-section {
+    background-color: #eaf2fc;
+    padding: 50px 0;
+}
+
+.about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Content Layout */
+.about-content {
+    display: flex;
+    color: #333;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* About Text */
+.about-text {
+    width: 48%;
+}
+
+.about-heading {
+    font-family: Georgia, serif;
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+    color: royalblue;
+}
+
+
+.about-description {
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    text-align: justify;
+}
+
+/* About Gallery */
+.about-gallery {
+    width: 40%; /* Slightly increased for better visibility */
+    max-width: 400px; /* Prevents it from getting too large */
+    overflow: hidden;
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds subtle shadow */
+}
+
+/* Swiper container */
+.swiper {
+    width: 100%;
+    height: 100%;
+}
+
+/* Swiper slide */
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Carousel Image */
+.carousel-image {
+    width: 100%;
+    height: 350px; /* Fixed height for consistency */
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* Pagination styling */
+.swiper-pagination-bullet {
+    background: royalblue !important;
+    opacity: 0.7;
+}
+
+.swiper-pagination-bullet-active {
+    background: black !important;
+}
+
+/* Navigation arrows */
+.swiper-button-next, .swiper-button-prev {
+    color: royalblue !important;
+}
+
+/* 🟢 Responsive Adjustments for Mobile */
+@media (max-width: 768px) {
+    /* Stack text above carousel */
+    .about-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+
+    }
+
+    .about-text {
+        width: 70%;
+    }
+
+    .about-gallery {
+        width: 40%; /* Expands on smaller screens */
+        aspect-ratio: 1 / 0.7; 
+        max-width: 40%;
+        margin-top: 20px;
+    }
+
+    .carousel-image {
+        height: 200px; /* Adjusts height for better fit */
+    }
+
+    .about-heading {
+        font-size: 2.5rem;
+    }
+
+    .about-description {
+        font-size: 1rem;
+    }
+}
+
+
+
+
+
+/* part 2 */
+/* Our Story Section */
+/* Background outside the container (matches last section background) */
+.story-section {
+    background-color: #eaf2f8; /* Light background */
+    display: flex;
+    justify-content: center;
+    padding: 50px 20px;
+}
+
+/* White background container */
+.story-container {
+    background-color: white;
+    max-width: 1000px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Text container */
+.story-content {
+    flex: 1;
+    text-align: left;
+}
+
+/* Title styling */
+.story-title {
+        font-family: Georgia, serif;
+        font-size: 3.5rem;
+        margin-bottom: 10px;
+        color: royalblue;
+}
+
+/* Paragraph styling (lighter black, justified) */
+.story-text {
+    font-size: 1.1rem;
+    color: #333; /* Light shade of black */
+    line-height: 1.6;
+    text-align: justify;
+}
+
+/* Image container */
+.story-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+/* Circular image styling */
+.story-image img {
+    width: 90%;
+    max-width: 350px;
+    height: 350px;
+    max-height: 350px; /* Ensures better scaling */
+    border-radius: 50%;
+    object-fit: cover; /* Ensures proper cropping inside the circle */
+    transition: transform 0.3s ease-in-out;
+}
+/* Hover Effect */
+.story-image img:hover {
+    transform: translateY(-5px);
+}
+
+@media (max-width: 768px) {
+    .story-container {
+        flex-direction: column; /* Stack content vertically */
+        text-align: center;
+        padding: 20px; /* Reduce padding */
+        align-items: center; /* Ensures proper centering */
+        width: 95%; /* Keeps it well-fitted on small screens */
+        max-width: 500px; /* Prevents excessive width */
+        margin: 0 auto; /* Centers the container */
+    }
+
+    .story-title {
+        font-size: 2rem; /* Ensures visibility */
+        font-weight: bold;
+        color: royalblue;
+        margin-bottom: 15px;
+        width: 100%; /* Ensures full width */
+        text-align: center; /* Centers title */
+        padding: 0 10px; /* Prevents content cut-off */
+    }
+
+    .story-text {
+        text-align: center; /* Align text properly */
+        max-width: 100%; /* Ensures better text wrapping */
+        font-size: 1rem; /* Adjusted font size */
+        line-height: 1.6; /* Improved spacing */
+        padding: 0 15px; /* Adds padding for better text placement */
+    }
+
+    .story-image {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-top: 15px; /* Adds spacing below text */
+    }
+
+    .story-image img {
+        width: 80%; /* Adjusted for better fit */
+        max-width: 280px; /* Ensures proper sizing */
+        max-height: 280px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+}
+
+
+
+
+
+/* part 3 */
+/* Outer section background (matches previous section) */
+.vision-section {
+    background-color: #eaf2f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 70px 5vw; /* Uses viewport width for better adaptability */
+}
+
+/* White background container */
+.vision-container {
+    background-color: white;
+    text-align: center;
+    width: 90%;
+    max-width: 1000px;
+    padding: 3rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Vision title */
+.vision-title {
+        font-family: Georgia, serif;
+        font-size: 3.5rem;
+        margin-bottom: 10px;
+        color: royalblue;
+}
+
+/* Divider line */
+.vision-divider {
+    width: 100px;
+    height: 3px;
+    background-color: royalblue;
+    margin: 0 auto 1.5rem;
+}
+
+/* Vision text */
+.vision-text {
+    font-size: 1.2rem;
+    color: #333;
+    line-height: 1.8;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .vision-container {
+        padding: 2.5rem;
+    }
+
+    .vision-title {
+        font-size: 2rem;
+    }
+
+    .vision-text {
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+}
+
+
+/* part 4 */
+/* 🌟 Core Values Section */
+.core-values-section {
+    background: url('../assets//CoreValues.jpg') no-repeat center center/cover;
+    padding: 100px 5%;
+    color: white;
+    display: flex;
+    flex-direction: column; /* Ensures heading stays on top */
+    align-items:flex-start;
+}
+
+/* 📌 Container */
+.core-values-container {
+    max-width: 800px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content */
+}
+
+/* 🏆 Section Heading */
+.core-values-heading {
+    font-weight: bold;
+    color: white;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+    text-align: center; /* Centered heading */
+    font-family: Georgia, serif;
+    font-size: 3.5rem;
+}
+
+/* 📊 Core Values Grid */
+.core-values-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2x2 grid on larger screens */
+    gap: 20px;
+    justify-content: center; /* Center-aligns content */
+}
+
+/* 📌 Core Value Box */
+.core-value-item {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 25px;
+    border-radius: 12px;
+    text-align: left;
+    color: black;
+    width: 280px; /* Slightly bigger for better visibility */
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 🏆 Hover Effect */
+.core-value-item:hover {
+    transform: translateY(-5px);
+}
+
+/* 📷 Flexbox for Icon + Title */
+.core-value-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: royalblue;
+}
+
+/* 🔵 Icon */
+.core-value-icon {
+    width: 45px;
+    height: 45px;
+}
+
+/* 🔤 Core Value Title */
+.core-value-title {
+    font-size: 20px;
+    font-weight: bold;
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+}
+
+/* 📝 Core Value Description */
+.core-value-description {
+    font-size: 15px;
+    line-height: 1.6;
+    font-family: "Poppins", sans-serif;
+    margin-top: 10px;
+}
+
+/* 📱 Mobile Styles */
+@media (max-width: 768px) {
+    .core-values-section {
+        padding: 60px 5%;
+    }
+
+    .core-values-heading {
+        font-size: 30px;
+        text-align: center;
+        margin-bottom: 30px;
+        display: block;
+        color: royalblue;
+    }
+
+    .core-values-grid {
+        grid-template-columns: 1fr; /* Show one value at a time */
+        width: 100%;
+        gap: 25px; /* More spacing for clarity */
+    }
+
+    .core-value-item {
+        width: 90%; /* Take up more width for better spacing */
+        text-align: center;
+        padding: 30px;
+    }
+
+    .core-value-header {
+        flex-direction: column; /* Stack icon and title */
+        align-items: center;
+        text-align: center;
+    }
+}
+
+
+
+
+
+/* part 5 */
+/* Team Section */
+.team-section {
+    background-color:#eaf2fc;
+    text-align: center;
+    padding: 80px 5%;
+}
+
+/* Heading */
+.team-section h2 {
+        font-family: Georgia, serif;
+        font-size: 3.5rem;
+        margin-bottom: 10px;
+        color: royalblue;
+}
+
+/* Team Container (2x2 Grid) */
+.team-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2x2 grid */
+    gap: 30px; /* Reduced gap for better alignment */
+    justify-content: center;
+    align-items: center;
+    max-width: 600px; /* Ensures central alignment */
+    margin: 0 auto; /* Centers the grid */
+}
+
+/* Team Member Box */
+.team-member {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    width: 220px; /* Keeps all cards uniform */
+    margin: 0 auto; /* Ensures centering */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Hover Effect */
+.team-member:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Profile Image */
+.team-member img {
+    width: 90px; /* Adjusted for better proportions */
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+/* Name */
+.team-member h5 {
+    font-size: 1.3em; /* Adjusted size */
+    color: #222;
+    font-weight: bold;
+    margin-bottom: 5px;
+    padding: 10px;
+}
+
+/* Role */
+.team-member h6 {
+    font-size: 1em;
+    color: #666;
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+/* Social Icons */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Reduced gap */
+}
+
+.social-icons a {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    border-radius: 50%;
+    background: #ddd;
+    font-size: 0.9rem;
+}
+
+.social-icons a:hover {
+    background: royalblue;
+    color: white;
+}
+
+/* 📱 Responsive for Small Screens */
+@media (max-width: 600px) {
+    .team-container {
+        grid-template-columns: 1fr; /* Single column on mobile */
+        max-width: 300px; /* Ensures centering */
+    }
+
+    .team-member {
+        max-width: 250px; /* Slightly larger for better readability */
+    }
+
+    .team-member img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .team-section h2 {
+        font-size: 2rem;
+    }
+}
+>>>>>>> 59d7a14 (sample content for algebra topic)

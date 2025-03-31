@@ -1,0 +1,39 @@
+.quiz-content {
+  max-width: 800px;  /* Restrict width for better readability */
+  margin: 20px auto; /* Center the content */
+  padding: 20px;
+  background-color: #fff3cd; /* Light yellow background for a quiz-like feel */
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow for a modern look */
+  text-align: left; /* Left-align text for better readability */
+  border-left: 5px solid #ffa000; /* Highlight border for emphasis */
+}
+
+.quiz-content h2 {
+  margin-bottom: 15px;
+  font-size: 1.8rem;
+  color: #d35400; /* Dark orange for a vibrant look */
+}
+
+.quiz-content p {
+  line-height: 1.8;
+  font-size: 1rem;
+  color: #444; /* Darker gray for contrast */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .quiz-content {
+    padding: 15px;
+    margin: 10px;
+  }
+
+  .quiz-content h2 {
+    font-size: 1.5rem;
+  }
+
+  .quiz-content p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+}

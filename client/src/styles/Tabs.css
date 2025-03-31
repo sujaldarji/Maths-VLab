@@ -1,0 +1,37 @@
+.tabs-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  /* Basic button styling */
+  .tab-button {
+    padding: 10px 16px;
+    background-color:#1E3A8A;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 17px;
+    transition: background-color 0.3s;
+  }
+  
+  /* Hover effect */
+  .tab-button:hover {
+    color: #FFD700;
+  }
+  
+  /* Active tab */
+  .tab-button.active {
+    color: #FFD700;
+  }
+  .tabs-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  
+    margin-top: 20px; 
+  }
+  

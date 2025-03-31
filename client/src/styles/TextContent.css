@@ -1,0 +1,205 @@
+/* General Styling for the Content Container */
+.text-content-container {
+  max-width: 100%;
+  background: #05b2e6;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s ease-in-out;
+}
+
+.text-content-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Title Styling */
+.text-content-title {
+  font-size: 26px;
+  font-weight: bold;
+  color: #222;
+  text-align: center;
+  border-bottom: 3px solid #007bff;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+/* Styling for Headings Inside the Content */
+.text-content-body h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #0056b3;
+  margin-top: 20px;
+  border-bottom: 2px solid #0056b3;
+  padding-bottom: 5px;
+}
+
+.text-content-body h2 {
+  font-size: 22px;
+  font-weight: bold;
+  color: #007bff;
+  margin-top: 18px;
+}
+
+.text-content-body h3 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #009688;
+  margin-top: 16px;
+}
+
+/* Styling for Paragraphs */
+.text-content-body p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #444;
+  text-align: justify;
+  margin-bottom: 15px;
+}
+
+/* Styling for Lists */
+.text-content-body ul {
+  padding-left: 20px;
+  margin-bottom: 15px;
+}
+
+.text-content-body ul li {
+  font-size: 18px;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.text-content-body ol {
+  padding-left: 20px;
+  margin-bottom: 15px;
+}
+
+.text-content-body ol li {
+  font-size: 18px;
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+/* Styling for Blockquotes */
+.text-content-body blockquote {
+  font-size: 18px;
+  font-style: italic;
+  color: #666;
+  border-left: 4px solid #007bff;
+  padding-left: 15px;
+  margin: 15px 0;
+}
+
+/* Styling for Tables */
+.text-content-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 15px 0;
+}
+
+.text-content-body th,
+.text-content-body td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.text-content-body th {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Styling for Code Blocks */
+.text-content-body pre {
+  background: #f4f4f4;
+  padding: 10px;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 16px;
+  color: #333;
+}
+
+/* No Content Message */
+.no-content {
+  color: #888;
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+}
+
+      
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        pre {
+            background: #eee;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        @media screen and (max-width: 768px) {
+          .content-container {
+              width: 90%;
+              padding: 15px;
+          }
+      
+          h1 {
+              font-size: 24px;
+          }
+      
+          h2 {
+              font-size: 20px;
+          }
+      
+          h3 {
+              font-size: 18px;
+          }
+      
+          p, .example {
+              font-size: 15px;
+          }
+      
+          .math {
+              font-size: 16px;
+              padding: 4px 8px;
+          }
+      }
+      
+      @media screen and (max-width: 480px) {
+          h1 {
+              font-size: 22px;
+          }
+      
+          h2 {
+              font-size: 18px;
+          }
+      
+          h3 {
+              font-size: 16px;
+          }
+      
+          p, .example {
+              font-size: 14px;
+          }
+      
+          .math {
+              font-size: 15px;
+              padding: 3px 6px;
+          }
+      
+          table, th, td {
+              font-size: 12px;
+          }
+      }

@@ -22,8 +22,12 @@
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.1.5",
     "sanitize-html": "^2.14.0",
+<<<<<<< HEAD
     "swiper": "^11.2.4",
     "tsparticles": "^3.8.1"
+=======
+    "swiper": "^11.2.4"
+>>>>>>> 59d7a14 (sample content for algebra topic)
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
