@@ -10,7 +10,6 @@ const VideoContent = lazy(() => import("../components/VideoContent"));
 const SimulationEmbed = lazy(() => import("../components/SimulationEmbed"));
 const QuizComponent = lazy(() => import("../components/QuizComponent"));
 const ProgressTracker = lazy(() => import("../components/ProgressTracker"));
-const GameContent = lazy(() => import("../components/GameContent"));
 
 const StudyPage = () => {
   const [message, setMessage] = useState("");
@@ -71,8 +70,6 @@ const StudyPage = () => {
         return <QuizComponent refId={topicRefs ? topicRefs.quiz : null} />;
       case "progress":
         return <ProgressTracker refId={topicRefs ? topicRefs.progress : null} />;
-      case "games":
-        return <GameContent refId={topicRefs ? topicRefs.game : null} />;
       default:
         return <TextContent refId={topicRefs ? topicRefs.text : null} />;
     }
