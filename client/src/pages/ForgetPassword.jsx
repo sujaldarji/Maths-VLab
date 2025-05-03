@@ -1,10 +1,12 @@
 import { useState } from "react";
 import "../styles/forgetpassword.css";
-import Logo from '../assets/logo2.png';
+import Logo from '../assets/Logo2.png';
 import fvector from '../assets/fpwd.jpg';
 import axios from "axios";
 
 const ForgotPassword = () => {
+    
+  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
     const [email, setEmail] = useState("");
     const [isSubmitted, setIsSubmitted] = useState(false); // Track submission state
     const [loading, setLoading] = useState(false); // ✅ Track loading state
@@ -19,7 +21,7 @@ const ForgotPassword = () => {
 
         setLoading(true); // ✅ Start loading
         try {
-            const response = await axios.post("http://localhost:3001/api/send-reset-link", { email });
+            const response = await axios.post(`${API_BASE_URL}/api/send-reset-link`, { email });
 
             if (response.status === 200) {
                 setIsSubmitted(true); // Hide form & show success message

@@ -29,11 +29,12 @@ router.post("/refresh-token", (req, res) => {
 // Logout Endpoint
 router.post("/logout", (req, res) => {
     res.clearCookie("refreshToken", {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "Lax",
-        path: "/",
-    });
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "None", // Allow cross-site cookie clearing
+    path: "/",
+});
+
 
     res.status(200).json({ message: "Logged out successfully" });
 });

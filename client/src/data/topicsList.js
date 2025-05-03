@@ -56,6 +56,24 @@ const topicsData = {
     { id: 39, title: "Applications of Integrals", difficulty: "Advanced", description: "Practical applications of integral calculus." },
     { id: 40, title: "Differential Equations", difficulty: "Advanced", description: "Solving and analyzing differential equations." },
   ],
+
+  DSA: [
+  { id: 41, title: "Arrays and Strings", difficulty: "Beginner", description: "Understanding the basics of arrays and strings." },
+  { id: 42, title: "Linked Lists", difficulty: "Intermediate", description: "Working with singly and doubly linked lists." },
+  { id: 43, title: "Stacks and Queues", difficulty: "Intermediate", description: "Implementing and using stacks and queues." },
+  { id: 44, title: "Trees and Binary Trees", difficulty: "Advanced", description: "Introduction to trees and binary trees." },
+  { id: 45, title: "Graphs and Traversal Algorithms", difficulty: "Advanced", description: "Graph theory and traversal methods like BFS and DFS." },
+  { id: 46, title: "Dynamic Programming", difficulty: "Advanced", description: "Solving problems using dynamic programming techniques." },
+],
+
+Aptitude: [
+  { id: 47, title: "Number Systems", difficulty: "Beginner", description: "Understanding types of numbers and operations." },
+  { id: 48, title: "Percentages", difficulty: "Beginner", description: "Calculating and applying percentages in problems." },
+  { id: 49, title: "Ratio and Proportion", difficulty: "Intermediate", description: "Solving problems based on ratios and proportions." },
+  { id: 50, title: "Time, Speed and Distance", difficulty: "Intermediate", description: "Problems involving motion, speed, and time." },
+  { id: 51, title: "Permutations and Combinations", difficulty: "Advanced", description: "Counting techniques in complex scenarios." },
+  { id: 52, title: "Probability", difficulty: "Advanced", description: "Introduction to basic probability theory and problems." },
+],
 };
 
 export default topicsData;
