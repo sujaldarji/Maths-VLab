@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:3001"; // Backend URL
-
+ const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
+ 
 const axiosInstance = axios.create({
     baseURL: API_BASE_URL,
     withCredentials: true, // Allow cookies (refresh token)
@@ -59,7 +59,7 @@ axiosInstance.interceptors.response.use(
 
             try {
                 // Refresh Token Request
-                const { data } = await axios.post(`${API_BASE_URL}/api/tokenRoutes/refresh-token`, {}, { withCredentials: true });
+                const { data } = await axiosInstance.post('/api/tokenRoutes/refresh-token');
 
                 localStorage.setItem("accessToken", data.accessToken);
                 axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${data.accessToken}`;
@@ -83,5 +83,14 @@ axiosInstance.interceptors.response.use(
         return Promise.reject(error);
     }
 );
+
+export const fetchTopicData = async (topicId) => {
+    try {
+        const response = await axiosInstance.get(`/api/topicRoutes/${topicId}`);
+        return response.data; // Return the topic data
+    } catch (error) {
+        throw new Error('Failed to fetch topic data');
+    }
+};
 
 export default axiosInstance;
