@@ -5,6 +5,7 @@ import "../styles/ResetPassword.css";
 import resetVector from "../assets/resetVector.jpg";  // 🎨 Add an illustration
 
 const ResetPassword = () => {
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
     const [searchParams] = useSearchParams();
     const token = searchParams.get("token");
     const navigate = useNavigate();
@@ -30,7 +31,7 @@ const ResetPassword = () => {
         }
 
         try {
-            const response = await axios.post("http://localhost:3001/api/reset-password", { token, password });
+            const response = await axios.post(`${API_BASE_URL}/api/reset-password`, { token, password });
 
             if (response.status === 200) {
                 setMessage("✅ Password reset successfully! Redirecting...");

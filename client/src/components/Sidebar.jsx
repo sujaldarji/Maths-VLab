@@ -13,6 +13,8 @@ const categories = [
   { title: "Algebra", icon: <TbMathFunction /> },
   { title: "Discrete Mathematics", icon: <MdAutoGraph /> },
   { title: "Calculus", icon: <TbMathIntegral /> },
+  { title: "DSA", icon: <MdAutoGraph /> },     
+  { title: "Aptitude", icon: <GiCalculator /> }, 
 ];
 
 const Sidebar = ({ onSelectDomain }) => {

@@ -5,6 +5,8 @@ import { validateName, validateEmail } from "../utils/validate";
 import { sanitizeInput } from "../utils/sanitizeInput";
 import axios from "axios";
 const ContactUs = () => {
+  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
+
 const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState(null);
@@ -51,7 +53,7 @@ const [formData, setFormData] = useState({ name: "", email: "", message: "" });
         message: sanitizeInput(formData.message),
       };
 
-      const response = await axios.post("http://localhost:3001/api/contactRoutes/", sanitizedData);
+      const response = await axios.post(`${API_BASE_URL}/api/contactRoutes/`, sanitizedData);
       setStatus({ type: "success", message: response.data.message });
 
       setFormData({ name: "", email: "", message: "" }); // Reset form
