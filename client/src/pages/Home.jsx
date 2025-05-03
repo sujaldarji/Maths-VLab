@@ -1,13 +1,18 @@
 import React ,{ useState, useEffect } from "react";
 import "../styles/home.css";
 import Particles from "../components/ParticlesBackground";
+import { useNavigate } from "react-router-dom";
 import { features, categories, faqs, testimonials } from "../data/Home";
+import { evaluate } from "mathjs"; 
 
 
 const LandingPage = () => {
-  
+  const navigate = useNavigate();
   const [openIndex, setOpenIndex] = useState(null);
   
+  const handleCategoryClick = () => {
+    navigate("/dashboard"); // Straight to dashboard
+  };
   const toggleFAQ = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
@@ -33,27 +38,84 @@ const LandingPage = () => {
   };
   
 
+  const [equation, setEquation] = useState("");
+  const [result, setResult] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSolve = () => {
+    try {
+      setError("");
+      if (!equation.trim()) {
+        setError("Enter an equation to solve");
+        return;
+      }
+      const sanitized = equation.replace(/[^0-9+\-*/.^()%πe ]/g, "");
+      setResult(evaluate(sanitized.replace(/\^/g, "**")));
+    } catch (err) {
+      setError("Couldn't solve this equation");
+      setResult("");
+    }
+  };
+
   return (
     <>
     <div>
     <Particles />
       {/* Hero Section */}
-      <div className="hero-section"  data-aos="fade-up" data-aos-duration="700">
-        <div className="hero-content">
-          <h1>Welcome to Maths VLab</h1>
-          <p>
-            Experience interactive mathematics learning through virtual simulations and tools.
-            Make complex concepts simple and engaging.
-          </p>
-          <div className="buttons">
-    <button className="btn primary" onClick={() => scrollToSection('categories')}>Get Started</button>
-    <button className="btn secondary" onClick={() => scrollToSection('features')}>Learn More</button>
-</div>
+      <div className="landing-container">
+        {/* Hero Section */}
+        <div className="hero-section" data-aos="fade-up" data-aos-duration="700">
+          <div className="hero-content">
+            <h1>Welcome to Maths VLab</h1>
+            <p>
+              Experience interactive mathematics learning through virtual simulations and tools.
+              Make complex concepts simple and engaging.
+            </p>
+            <div className="buttons">
+              <button className="btn primary" onClick={() => scrollToSection('categories')}>
+                Get Started
+              </button>
+              <button className="btn secondary" onClick={() => scrollToSection('features')}>
+                Learn More
+              </button>
+            </div>
+          </div>
+          
+          <div className="hero-animation">
+            {/* Moved Equation Solver to Right Side */}
+            <div className="equation-solver-right">
+              <h3>Try Our Equation Solver</h3>
+              <div className="solver-input-group">
+                <input
+                  type="text"
+                  value={equation}
+                  onChange={(e) => setEquation(e.target.value)}
+                  placeholder="Try: 2+2, 3×4, or 2^3"
+                  onKeyPress={(e) => e.key === "Enter" && handleSolve()}
+                />
+                <button onClick={handleSolve}>
+                  {result ? "Recalculate" : "Solve"}
+                </button>
+              </div>
+              {result && (
+                <div className="solver-result">
+                  Result: <strong>{result}</strong>
+                </div>
+              )}
+              {error && <div className="solver-error">{error}</div>}
+              
+              {/* Optional: Add a small math visualization below */}
+              <div className="math-preview">
+                <div className="equation-display">
+                  {equation || "Enter an equation"}
+                </div>
+                <div className="result-display">
+                  {result || "Solution appears here"}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="hero-animation">
-          <div className="animation-placeholder">Animation Goes Here</div>
-        </div>
-      </div>
 
       {/* What is Maths VLab Section */}
       <section className="maths-vlab-section"  data-aos="fade-up" data-aos-duration="700">
@@ -131,8 +193,8 @@ const LandingPage = () => {
   </h1>
   <div className="categories-container" data-aos="fade-up" data-aos-duration="700">
     {categories.map((category, index) => (
-      <a href="#" className="category-card" key={index}>
-        <img src={category.image} alt={category.title} />
+      <a className="category-card" key={index} onClick={handleCategoryClick}>
+        <img src={category.image} alt={category.title} loading="lazy"/>
         <div className="card-content">
           <h2>{category.title}</h2>
           <p>{category.description}</p>
@@ -144,9 +206,6 @@ const LandingPage = () => {
 </div>
 
     <br/><br/><br/><br/>
-
-
-
 
 
 
@@ -197,6 +256,7 @@ const LandingPage = () => {
 </section>
 
 
+</div>
 </div>
 
     </>

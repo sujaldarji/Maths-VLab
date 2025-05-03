@@ -12,6 +12,7 @@ import Success from "./pages/success";
 import About from "./pages/About";
 import ContactUs from "./pages/Contact";
 import ResetPassword from "./pages/ResetPassword";
+import StudyPage from "./pages/StudyPage";
 
 function App() {
   useEffect(() => {
@@ -34,7 +35,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/study/:topicId" element={<StudyPage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -8,6 +8,7 @@ import { validateName, validateEmail, validatePassword, validateConfirmPassword 
 import { sanitizeInput } from "../utils/sanitizeInput.js"; // Import sanitization function
 
 function SignUp() {
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -54,7 +55,7 @@ function SignUp() {
         }
 
         try {
-            await axios.post("http://localhost:3001/api/authRoutes/register", {
+            await axios.post(`${API_BASE_URL}/api/authRoutes/register`, {
                 name: sanitizedData.name,
                 email: sanitizedData.email,
                 password: sanitizedData.password,

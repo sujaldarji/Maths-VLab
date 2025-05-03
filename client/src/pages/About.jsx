@@ -150,10 +150,7 @@ const AboutUs = () => {
         <h2  data-aos="fade-up" data-aos-duration="1000">Our Team</h2>
         <div className="team-container"  data-aos="fade-up" data-aos-duration="1000">
           {[
-            { name: "Ansh Paryani", role: "Project Manager" },
-            { name: "Kalpesh Gandha", role: "Software Architect" },
-            { name: "Ishan Kumra", role: "UX/UI Designer" },
-            { name: "Sujal Daji", role: "Software Developer" },
+            { name: "Sujal Darji", role: "Software Engineer" },
           ].map((member, index) => (
             <div className="team-member" key={index}>
               <img src={c6} alt={member.name} loading="lazy" />

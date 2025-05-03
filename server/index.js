@@ -13,6 +13,7 @@ const userRoutes = require("./routes/userRoutes");
 const tokenRoutes = require("./routes/tokenRoutes");
 const contactRoutes = require("./routes/contactRoutes");
 const { sendResetEmail } = require("./config/sendMail");
+const topicRoutes = require("./routes/topicRoutes");
 
 const app = express();
 
@@ -22,12 +23,12 @@ if (!process.env.PORT || !process.env.MONGO_URI) {
     process.exit(1);
 }
 
-const PORT = process.env.PORT;
-
+const PORT = process.env.PORT || 3001;
+const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5173';
 // Middleware
 app.use(express.json());
 app.use(cors({
-    origin: 'http://localhost:5173', // Adjust for production
+    origin: CLIENT_URL, // Adjust for production
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
 }));
@@ -68,6 +69,7 @@ app.use("/api/authRoutes", authRoutes);
 app.use("/api/userRoutes", userRoutes);
 app.use("/api/tokenRoutes", tokenRoutes);
 app.use("/api/contactRoutes", contactRoutes);
+app.use("/api/topicRoutes", topicRoutes);
 
 // Global Error Handling Middleware
 app.use((err, req, res, next) => {
@@ -83,28 +85,6 @@ const resetTokens = new Map();
 // Forgot Password Endpoint
 app.post('/api/send-reset-link', async (req, res) => {
     const { email } = req.body;
-
-    // try {
-    //     // Check if the user exists
-    //     const user = await StudentModel.findOne({ email });
-    //     if (!user) {
-    //         return res.status(404).json({ message: "No user found with this email" });
-    //     }
-
-    //     // Generate reset token
-    //     const resetToken = crypto.randomBytes(32).toString("hex");
-    //     resetTokens.set(resetToken, email); // Store token in memory
-
-    //     // Send email with reset link
-    //     const resetLink = `http://localhost:5173/reset-password/token=${resetToken}`;
-    //     await sendResetEmail(email, resetLink);
-
-    //     res.status(200).json({ message: "Reset link sent successfully" });
-
-    // } catch (error) {
-    //     console.error("Error sending reset link:", error);
-    //     res.status(500).json({ message: "Internal server error" });
-    // }
     try {
         const { email } = req.body;
         const user = await StudentModel.findOne({ email });
@@ -134,6 +114,9 @@ app.post('/api/send-reset-link', async (req, res) => {
         console.error("Forgot Password Error:", error);
         res.status(500).json({ message: "Something went wrong" });
     }
+});
+app.get('/api/test', (req, res) => {
+  res.send('API is working!');
 });
 
 // Reset Password Endpoint

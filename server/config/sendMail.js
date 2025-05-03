@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 require("dotenv").config();
-
+const frontendUrl = process.env.CLIENT_URL || "http://localhost:5173";
 // ✅ Create Email Transporter
 const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -21,7 +21,7 @@ const sendResetEmail = async (email, resetToken) => {
 
 We received a request to reset your password for your Maths VLab account. Click the link below to set a new password:
 
-🔗 Reset Link: http://localhost:5173/reset-password?token=${resetToken}
+🔗 Reset Link: ${frontendUrl}/reset-password?token=${resetToken}
 
 ⚠️ This link will expire in 15 minutes for security reasons. If you did not request a password reset, please ignore this email.
 

@@ -60,7 +60,7 @@ router.post('/signin', validateSignIn, async (req, res) => {
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: "Strict",
+            sameSite: "None",
             path: "/",
         });
 

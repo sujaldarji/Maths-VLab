@@ -1,131 +1,162 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance";
-import "../styles/navbar.css";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaUser, FaSignOutAlt, FaHome, FaInfoCircle, FaEnvelope } from "react-icons/fa";
 import logo from "../assets/Logo1.png";
+import "../styles/Navbar.css";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [username, setUsername] = useState("");
-  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [authState, setAuthState] = useState({
+    isAuthenticated: false,
+    username: "",
+    isLoading: true
+  });
+  const [isScrolled, setIsScrolled] = useState(false);
+  const menuRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Function to check authentication status
-  const checkAuth = useCallback(async () => {
-    if (isLoggingOut) return; // Prevent auth check during logout
-    if (location.pathname === "/signin") return; // Prevent loop if already on signin page
-
-    const storedAccessToken = localStorage.getItem("accessToken");
-    if (!storedAccessToken) {
-      console.log("❌ No access token, skipping auth check.");
-      setIsAuthenticated(false);
-      setUsername("");
-      return;
-    }
-
-    try {
-      console.log("🔍 Checking authentication...");
-      const response = await axiosInstance.get("/api/userRoutes/auth-status", { withCredentials: true });
-
-      if (response.data.authenticated) {
-        console.log("✅ Authenticated:", response.data.user.name);
-        setIsAuthenticated(true);
-        setUsername(response.data.user.name);
-      } else {
-        console.log("❌ Not authenticated");
-        setIsAuthenticated(false);
-        setUsername("");
-      }
-    } catch (error) {
-      console.error("⚠️ Auth check failed:", error.response?.data || error.message);
-      setIsAuthenticated(false);
-      setUsername("");
-    }
-  }, [isLoggingOut, location.pathname]);
-
-  // Run authentication check when route changes
+  // Scroll effect
   useEffect(() => {
-    checkAuth();
-  }, [location, checkAuth]);
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  // Handle Logout
+  // Authentication check with debounce
+  const checkAuth = useCallback(async () => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        setAuthState({ isAuthenticated: false, username: "", isLoading: false });
+        return;
+      }
+
+      const { data } = await axiosInstance.get("/api/userRoutes/auth-status", {
+        withCredentials: true,
+        headers: { 'Cache-Control': 'no-cache' }
+      });
+
+      setAuthState({
+        isAuthenticated: data.authenticated,
+        username: data.user?.name.split(" ")[0] || "",
+        isLoading: false
+      });
+    } catch (error) {
+      console.error("Auth check error:", error);
+      setAuthState({ isAuthenticated: false, username: "", isLoading: false });
+    }
+  }, []);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    checkAuth();
+    return () => controller.abort();
+  }, [location.pathname, checkAuth]);
+
+  // Logout handler
   const handleLogout = async () => {
     try {
-      setIsLoggingOut(true); // Prevent auth check while logging out
-
-      await axiosInstance.post("/api/tokenRoutes/logout", {}, { withCredentials: true });
-
-      console.log("✅ Logged out successfully");
-
-      // Clear auth state & token
+      await axiosInstance.post("/api/tokenRoutes/logout", {}, { 
+        withCredentials: true,
+        signal: AbortSignal.timeout(5000)
+      });
       localStorage.removeItem("accessToken");
-      setIsAuthenticated(false);
-      setUsername("");
-
-      setTimeout(() => {
-        setIsLoggingOut(false);
-        navigate("/signin"); // Redirect AFTER updating state
-      }, 500);
+      setAuthState({ isAuthenticated: false, username: "", isLoading: false });
+      navigate("/signin", { replace: true });
     } catch (error) {
-      console.error("❌ Logout failed:", error.response?.data || error.message);
-      setIsLoggingOut(false);
+      if (!error.isCanceled) {
+        console.error("Logout error:", error);
+      }
     }
   };
 
-  // Toggle mobile menu
-  const toggleMenu = () => {
-    setMenuOpen((prev) => !prev);
-  };
+  // Close menu when clicking outside or navigating
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Navigation items config
+  const navItems = [
+    { path: "/", label: "Home", icon: <FaHome /> },
+    { path: "/about", label: "About", icon: <FaInfoCircle /> },
+    { path: "/contact", label: "Contact", icon: <FaEnvelope /> },
+    ...(authState.isAuthenticated ? [{ path: "/dashboard", label: "Dashboard", icon: <FaUser /> }] : [])
+  ];
 
   return (
-    <nav className="navbar">
-      <div className="navbar-container">
-        {/* Logo */}
-        <Link to="/" className="logo">
-          <img src={logo} alt="Maths VLab Logo" />
+    <nav className={`navbar ${isScrolled ? "scrolled" : ""}`} ref={menuRef}>
+      <div className="navbar-container container">
+        <Link to="/" className="logo" aria-label="Maths VLab Home">
+          <img src={logo} alt="" width="40" height="40" />
+          <span>Maths VLab</span>
         </Link>
 
-        {/* Mobile Menu Icon */}
-        <div className="menu-icon" onClick={toggleMenu}>
+        <button 
+          className={`menu-toggle ${menuOpen ? "open" : ""}`}
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-expanded={menuOpen}
+          aria-label="Toggle navigation"
+        >
           {menuOpen ? <FaTimes /> : <FaBars />}
-        </div>
+        </button>
 
-        {/* Navigation Links */}
-        <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
-          <li>
-            <Link to="/" onClick={toggleMenu} className={location.pathname === "/" ? "active" : ""}>
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link to="/about" onClick={toggleMenu} className={location.pathname === "/about" ? "active" : ""}>
-              About Us
-            </Link>
-          </li>
-          <li>
-            <Link to="/contact" onClick={toggleMenu} className={location.pathname === "/contact" ? "active" : ""}>
-              Contact Us
-            </Link>
-          </li>
-        </ul>
+        <div className={`nav-menu ${menuOpen ? "open" : ""}`}>
+          <ul className="nav-links">
+            {navItems.map((item) => (
+              <li key={item.path}>
+                <Link
+                  to={item.path}
+                  className={location.pathname === item.path ? "active" : ""}
+                  onClick={() => setMenuOpen(false)}
+                  aria-current={location.pathname === item.path ? "page" : undefined}
+                >
+                  <span className="nav-icon">{item.icon}</span>
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
 
-        {/* Authentication Section */}
-        <div className="auth-buttons">
-          {isAuthenticated ? (
-            <>
-              <span className="username">Hi, {username}!</span>
-              <button className="logout-btn" onClick={handleLogout}>Logout</button>
-            </>
-          ) : (
-            <Link to="/signin" className="login-btn">Login</Link>
-          )}
+          <div className="auth-section">
+            {authState.isAuthenticated ? (
+              <div className="user-menu">
+                <span className="welcome-msg">
+                  <FaUser className="user-icon" aria-hidden="true" />
+                  {authState.username}
+                </span>
+                <button
+                  className="logout-btn"
+                  onClick={handleLogout}
+                  disabled={authState.isLoading}
+                  aria-label="Logout"
+                >
+                  <FaSignOutAlt aria-hidden="true" />
+                  <span>Logout</span>
+                </button>
+              </div>
+            ) : (
+              <Link 
+                to="/signin" 
+                className="login-btn"
+                onClick={() => setMenuOpen(false)}
+              >
+                Login / Register
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </nav>
   );
 };
 
-export default Navbar;
+export default React.memo(Navbar);
