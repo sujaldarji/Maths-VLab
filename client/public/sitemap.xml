@@ -84,4 +84,23 @@
     <priority>0.9</priority>
   </url>
 
+  <url>
+    <loc>https://maths-vlab.vercel.app/admin</loc>
+    <lastmod>2025-08-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://maths-vlab.vercel.app/admin/teachers</loc>
+    <lastmod>2025-08-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://maths-vlab.vercel.app/unauthorized</loc>
+    <lastmod>2025-08-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
 </urlset>
