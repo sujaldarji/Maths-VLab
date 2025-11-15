@@ -16,7 +16,7 @@ import Graph from "./pages/GraphPageSimulationDemo";
 import AdminDashboard from './pages/admin/adminDashboard';
 import AdminTeachers from './pages/admin/adminTeachers';
 import ProtectedRoute from './components/ProtectedRoute';
-import UnauthorizedPage from './pages/Unauthorized';
+import UnauthorizedPage from './pages/unauthorized';
 
 function App() {
   useEffect(() => {
