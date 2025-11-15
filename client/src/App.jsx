@@ -8,11 +8,15 @@ import LandingPage from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import ForgetPassword from "./pages/ForgetPassword";
-import Success from "./pages/success";
 import About from "./pages/About";
 import ContactUs from "./pages/Contact";
 import ResetPassword from "./pages/ResetPassword";
 import StudyPage from "./pages/StudyPage";
+import Graph from "./pages/GraphPageSimulationDemo";
+import AdminDashboard from './pages/admin/adminDashboard';
+import AdminTeachers from './pages/admin/adminTeachers';
+import ProtectedRoute from './components/ProtectedRoute';
+import UnauthorizedPage from './pages/Unauthorized';
 
 function App() {
   useEffect(() => {
@@ -27,16 +31,60 @@ function App() {
     <BrowserRouter>
       <Navbar />
       <Routes>
+        {/* Public Routes */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/register" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/resetpassword" element={<ForgetPassword />} />
-        <Route path="/success" element={<Success />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/study/:topicId" element={<StudyPage />} />
+        <Route path="/unauthorized" element={<UnauthorizedPage />} />
+
+        {/* Protected Routes - Any authenticated user */}
+        <Route 
+          path="/dashboard" 
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/study/:topicId" 
+          element={
+            <ProtectedRoute>
+              <StudyPage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/graph" 
+          element={
+            <ProtectedRoute>
+              <Graph />
+            </ProtectedRoute>
+          } 
+        />
+
+        {/* Admin Only Routes */}
+        <Route 
+          path="/admin" 
+          element={
+            <ProtectedRoute roles={['admin']}>
+              <AdminDashboard />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/admin/teachers" 
+          element={
+            <ProtectedRoute roles={['admin']}>
+              <AdminTeachers />
+            </ProtectedRoute>
+          } 
+        />
+        
       </Routes>
     </BrowserRouter>
   );

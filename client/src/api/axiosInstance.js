@@ -1,7 +1,7 @@
 import axios from "axios";
 
- const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
- 
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
+
 const axiosInstance = axios.create({
     baseURL: API_BASE_URL,
     withCredentials: true, // Allow cookies (refresh token)
@@ -40,7 +40,15 @@ axiosInstance.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
 
+        // FIX: Only attempt token refresh for 401 errors that are NOT from the signin endpoint
         if (error.response?.status === 401 && !originalRequest._retry) {
+            
+            // Don't try to refresh token for signin requests (incorrect password)
+            if (originalRequest.url.includes('/signin') || originalRequest.url.includes('/register')) {
+                return Promise.reject(error); // Let the signin page handle the error
+            }
+
+            // Only refresh token for authenticated requests that failed due to expired token
             if (isRefreshing) {
                 return new Promise((resolve, reject) => {
                     addRefreshSubscriber((newToken) => {

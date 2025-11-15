@@ -303,3 +303,33 @@ button:focus-visible {
   outline-offset: 3px;
   border-radius: 2px;
 }
+
+
+
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.user-role {
+  font-size: 0.7rem;
+  color: #6b7280;
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
+/* Role-specific colors in welcome message */
+.user-menu .welcome-msg[data-role="admin"] {
+  color: #dc2626;
+}
+
+.user-menu .welcome-msg[data-role="teacher"] {
+  color: #d97706;
+}
+
+.user-menu .welcome-msg[data-role="student"] {
+  color: #059669;
+}

@@ -6,6 +6,8 @@ import { FaStar, FaRegSadCry, FaSearch, FaFilter, FaSyncAlt } from "react-icons/
 import { useNavigate, useLocation } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance";
 import useDebounce from "./useDebounce";
+import CreateTopicModal from "./CreateTopicModal"; // Add this import
+import EditTopicModal from './EditTopicModal'; // Add this import
 
 const difficultyIcons = {
   Beginner: <FaStar className="beginner-icon" />,
@@ -25,6 +27,18 @@ const Dashboard = () => {
   const [difficultyFilter, setDifficultyFilter] = useState("All");
   const debouncedSearch = useDebounce(searchQuery, 300);
 
+  // Role-based access control
+  const [userRole, setUserRole] = useState('student');
+  const canEdit = ['teacher', 'admin'].includes(userRole);
+  const canCreate = ['teacher', 'admin'].includes(userRole);
+  const canDelete = userRole === 'admin';
+
+  // Modal states - ADD THESE
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [selectedTopic, setSelectedTopic] = useState(null);
+
   // Set initial domain from URL
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -34,12 +48,31 @@ const Dashboard = () => {
     }
   }, [location.search]);
 
+  const handleTopicUpdated = useCallback(() => {
+  setIsEditModalOpen(false);
+  setSelectedTopic(null);
+  console.log('Topic updated successfully!');
+  // You can add logic to refresh the topics list here
+}, []);
+
   // Auth verification with error handling
   const verifyAuth = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
-      await axiosInstance.get("/api/userRoutes/auth-status");
+      // First check localStorage for user role
+      const userData = JSON.parse(localStorage.getItem('user') || '{}');
+      if (userData.role) {
+        setUserRole(userData.role);
+      }
+
+      // Then verify auth with backend
+      const response = await axiosInstance.get("/api/userRoutes/auth-status");
+      
+      // Update role from backend response if available
+      if (response.data.user?.role) {
+        setUserRole(response.data.user.role);
+      }
     } catch (err) {
       setError(err.response?.data?.message || "Authentication failed");
       navigate("/signin");
@@ -72,6 +105,14 @@ const Dashboard = () => {
     setDifficultyFilter("All");
   }, []);
 
+  // Handle successful topic creation - ADD THIS FUNCTION
+  const handleTopicCreated = useCallback(() => {
+    setIsCreateModalOpen(false);
+    // You can add logic here to refresh topics or show success message
+    console.log('Topic created successfully!');
+    // Optionally refresh the topics list if you're fetching from backend
+  }, []);
+
   if (isLoading) {
     return (
       <div className="dashboard-loading">
@@ -101,10 +142,22 @@ const Dashboard = () => {
 
       <main className="dashboard-content">
         <header className="dashboard-header">
-          <h1 className="dashboard-title">
-            {selectedDomain} Topics
-            <span className="topic-count">{displayedTopics.length} {displayedTopics.length === 1 ? "topic" : "topics"}</span>
-          </h1>
+          <div className="header-top-row">
+            <h1 className="dashboard-title">
+              {selectedDomain} Topics
+              <span className="topic-count">{displayedTopics.length} {displayedTopics.length === 1 ? "topic" : "topics"}</span>
+            </h1>
+            
+            {/* Create New Topic Button - UPDATED */}
+            {canCreate && (
+              <button 
+                className="create-topic-btn"
+                onClick={() => setIsCreateModalOpen(true)}
+              >
+                + Create New Topic
+              </button>
+            )}
+          </div>
 
           <div className="dashboard-controls">
             <div className="search-container">
@@ -156,6 +209,36 @@ const Dashboard = () => {
                   <div className="topic-content">
                     <h2 className="topic-title">{topic.title}</h2>
                     <p className="topic-description">{topic.description}</p>
+                    
+                    {/* Edit & Delete Buttons - UPDATED */}
+                    {(canEdit || canDelete) && (
+                      <div className="topic-actions">
+                        {canEdit && (
+                          <button 
+                            className="edit-topic-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedTopic(topic);
+                              setIsEditModalOpen(true);
+                            }}
+                          >
+                            Edit
+                          </button>
+                        )}
+                        {canDelete && (
+                          <button 
+                            className="delete-topic-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedTopic(topic);
+                              setIsDeleteModalOpen(true);
+                            }}
+                          >
+                            Delete
+                          </button>
+                        )}
+                      </div>
+                    )}
                   </div>
                   <footer className="topic-footer">
                     <span className={`difficulty-badge ${topic.difficulty.toLowerCase()}`}>
@@ -177,6 +260,31 @@ const Dashboard = () => {
           )}
         </section>
       </main>
+
+      {/* Modal Render - ADD THIS SECTION */}
+      {isCreateModalOpen && (
+        <CreateTopicModal 
+          onClose={() => setIsCreateModalOpen(false)}
+          onSuccess={handleTopicCreated}
+        />
+      )}
+      
+       {isEditModalOpen && (
+        <EditTopicModal 
+          topic={selectedTopic}
+          onClose={() => setIsEditModalOpen(false)}
+          onSuccess={handleTopicUpdated}
+        />
+      )}
+{/*       
+      {isDeleteModalOpen && (
+        <DeleteConfirmationModal 
+          topic={selectedTopic}
+          onClose={() => setIsDeleteModalOpen(false)}
+          onSuccess={handleTopicDeleted}
+        />
+      )}  */}
+      
     </div>
   );
 };

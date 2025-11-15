@@ -1,6 +1,6 @@
 const express = require("express");
 const authenticateUser = require("../middlewares/authMiddleware.js");
-const StudentModel = require("../Models/Student.js");
+const UserModel = require("../Models/Users.js");
 
 const router = express.Router();
 
@@ -11,29 +11,31 @@ router.get("/auth-status", authenticateUser, async (req, res) => {
             return res.status(401).json({ success: false, authenticated: false, message: "Unauthorized" });
         }
 
-        const user = await StudentModel.findById(req.user.userId).select("name");
+        const user = await UserModel.findById(req.user.userId).select("name role isApproved");
         if (!user) {
             return res.status(404).json({ success: false, authenticated: false, message: "User not found" });
         }
 
-        res.json({ success: true, authenticated: true, user: { name: user.name } });
+        if (user.role === "teacher" && !user.isApproved) {
+            return res.status(403).json({
+                success: false,
+                authenticated: true,
+                message: "Teacher account pending admin approval",
+                user: { name: user.name, role: user.role, isApproved: user.isApproved },
+            });
+        }
+        
+        res.json({ 
+            success: true, 
+            authenticated: true, 
+            user: { 
+                name: user.name, 
+                role: user.role,
+                isApproved: user.isApproved 
+            } 
+        });
     } catch (error) {
         console.error("Auth Status Error:", error);
-        res.status(500).json({ success: false, message: "Internal server error" });
-    }
-});
-
-// 🔹 Protected Success Route (Example Protected Endpoint)
-router.get("/success", authenticateUser, async (req, res) => {
-    try {
-        const user = await StudentModel.findById(req.user.userId).select("name");
-        if (!user) {
-            return res.status(404).json({ success: false, message: "User not found" });
-        }
-
-        res.json({ success: true, message: `Welcome, ${user.name}! You have successfully accessed a protected route.` });
-    } catch (error) {
-        console.error("Success Route Error:", error);
         res.status(500).json({ success: false, message: "Internal server error" });
     }
 });
@@ -45,13 +47,17 @@ router.get("/verify-token", authenticateUser, async (req, res) => {
             return res.status(401).json({ success: false, message: "Unauthorized" });
         }
 
-        const user = await StudentModel.findById(req.user.userId).select("name");
+        const user = await UserModel.findById(req.user.userId).select("name role isApproved");
         if (!user) {
             return res.status(404).json({ success: false, message: "User not found" });
         }
 
-        res.status(200).json({ success: true, message: "Token is valid", user: { name: user.name } });
-    } catch (error) {
+        res.status(200).json({
+          success: true,
+          message: "Token is valid",
+          user: { name: user.name, role: user.role, isApproved: user.isApproved }, 
+        });
+  } catch (error) {
         console.error("Token Verification Error:", error);
         res.status(500).json({ success: false, message: "Internal server error" });
     }

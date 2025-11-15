@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import SignUpImage from "../assets/signupimage.jpg";
-import "../styles/signup.css"; // Assuming this CSS file is updated for the new design
+import "../styles/signup.css";
 import Logo from "../assets/Logo2.png";
 import { validateName, validateEmail, validatePassword, validateConfirmPassword } from "../utils/validate.js";
-import { sanitizeInput } from "../utils/sanitizeInput.js"; // Import sanitization function
+import { sanitizeInput } from "../utils/sanitizeInput.js";
 
 function SignUp() {
     const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
@@ -14,6 +14,7 @@ function SignUp() {
         email: "",
         password: "",
         confirmPassword: "",
+        role: "student" // Default role
     });
     const [errors, setErrors] = useState({});
     const [successMessage, setSuccessMessage] = useState("");
@@ -23,6 +24,11 @@ function SignUp() {
     // Handle input change
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    // Handle role selection
+    const handleRoleChange = (role) => {
+        setFormData({ ...formData, role });
     };
 
     // Handle Form Submission
@@ -36,8 +42,9 @@ function SignUp() {
         const sanitizedData = {
             name: sanitizeInput(formData.name.trim()),
             email: sanitizeInput(formData.email.trim()),
-            password: formData.password, // No sanitization for passwords
+            password: formData.password,
             confirmPassword: formData.confirmPassword,
+            role: formData.role
         };
 
         // Perform validation
@@ -59,10 +66,16 @@ function SignUp() {
                 name: sanitizedData.name,
                 email: sanitizedData.email,
                 password: sanitizedData.password,
+                role: sanitizedData.role
             });
 
-            setSuccessMessage("✅ Sign-up successful! Redirecting...");
-            setTimeout(() => navigate("/signin"), 2000);
+            if (sanitizedData.role === "teacher") {
+                setSuccessMessage("✅ Sign-up successful! Your account is pending admin approval. Redirecting...");
+            } else {
+                setSuccessMessage("✅ Sign-up successful! Redirecting...");
+            }
+            
+            setTimeout(() => navigate("/signin"), 3000);
         } catch (error) {
             setErrors({
                 form: error.response?.data?.message || "⚠️ Server error! Please try again later.",
@@ -130,13 +143,42 @@ function SignUp() {
                         />
                         {errors.confirmPassword && <p className="error-message">{errors.confirmPassword}</p>}
 
+                        {/* Role Selection */}
+                        <div className="role-selection">
+                            <label className="role-label">I am a:</label>
+                            <div className="role-options">
+                                <button
+                                    type="button"
+                                    className={`role-btn ${formData.role === 'student' ? 'active' : ''}`}
+                                    onClick={() => handleRoleChange('student')}
+                                >
+                                    <span className="role-icon">🎓</span>
+                                    Student
+                                </button>
+                                <button
+                                    type="button"
+                                    className={`role-btn ${formData.role === 'teacher' ? 'active' : ''}`}
+                                    onClick={() => handleRoleChange('teacher')}
+                                >
+                                    <span className="role-icon">👨‍🏫</span>
+                                    Teacher
+                                </button>
+                            </div>
+                        </div>
+
+                        {formData.role === 'teacher' && (
+                            <div className="teacher-note">
+                                <p>📝 Teacher accounts require admin approval before you can access all features.</p>
+                            </div>
+                        )}
+
                         <button type="submit" className="signup-btn" disabled={loading}>
                             {loading ? "Signing Up..." : "Sign Up"}
                         </button>
                     </form>
 
                     <p className="back-to-login">
-                        Already have an account? <Link to="/signin" className="link" >Sign In</Link>
+                        Already have an account? <Link to="/signin" className="link">Sign In</Link>
                     </p>
                 </div>
             </div>

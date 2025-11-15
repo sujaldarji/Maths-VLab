@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance";
-import { FaBars, FaTimes, FaUser, FaSignOutAlt, FaHome, FaInfoCircle, FaEnvelope } from "react-icons/fa";
-import logo from "../assets/Logo1.png";
+import { FaBars, FaTimes, FaUser, FaSignOutAlt, FaHome, FaInfoCircle, FaEnvelope, FaUserShield, FaChalkboardTeacher } from "react-icons/fa";
+import logo from "../assets/Logo2.png";
 import "../styles/Navbar.css";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [authState, setAuthState] = useState({
+  const [user, setUser] = useState({
     isAuthenticated: false,
     username: "",
+    role: "",
     isLoading: true
   });
   const [isScrolled, setIsScrolled] = useState(false);
@@ -24,51 +25,56 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Authentication check with debounce
+  // Simplified authentication check using localStorage
   const checkAuth = useCallback(async () => {
     try {
       const token = localStorage.getItem("accessToken");
-      if (!token) {
-        setAuthState({ isAuthenticated: false, username: "", isLoading: false });
+      const userData = JSON.parse(localStorage.getItem("user") || "{}");
+      
+      if (!token || !userData.role) {
+        setUser({ isAuthenticated: false, username: "", role: "", isLoading: false });
         return;
       }
 
-      const { data } = await axiosInstance.get("/api/userRoutes/auth-status", {
-        withCredentials: true,
-        headers: { 'Cache-Control': 'no-cache' }
-      });
-
-      setAuthState({
-        isAuthenticated: data.authenticated,
-        username: data.user?.name.split(" ")[0] || "",
+      // Use localStorage data directly (faster)
+      setUser({
+        isAuthenticated: true,
+        username: userData.name || userData.email?.split("@")[0] || "User",
+        role: userData.role,
         isLoading: false
       });
+
+      // Optional: Verify with backend in background
+      try {
+        await axiosInstance.get("/api/userRoutes/verify-token");
+      } catch (error) {
+        console.log("Token verification failed, using cached data");
+      }
     } catch (error) {
       console.error("Auth check error:", error);
-      setAuthState({ isAuthenticated: false, username: "", isLoading: false });
+      setUser({ isAuthenticated: false, username: "", role: "", isLoading: false });
     }
   }, []);
 
   useEffect(() => {
-    const controller = new AbortController();
     checkAuth();
-    return () => controller.abort();
   }, [location.pathname, checkAuth]);
 
   // Logout handler
   const handleLogout = async () => {
     try {
       await axiosInstance.post("/api/tokenRoutes/logout", {}, { 
-        withCredentials: true,
-        signal: AbortSignal.timeout(5000)
+        withCredentials: true
       });
-      localStorage.removeItem("accessToken");
-      setAuthState({ isAuthenticated: false, username: "", isLoading: false });
-      navigate("/signin", { replace: true });
     } catch (error) {
-      if (!error.isCanceled) {
-        console.error("Logout error:", error);
-      }
+      console.log("Logout API call failed, clearing local data anyway");
+    } finally {
+      // Always clear local data
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("user");
+      localStorage.removeItem("userRole");
+      setUser({ isAuthenticated: false, username: "", role: "", isLoading: false });
+      navigate("/", { replace: true });
     }
   };
 
@@ -84,19 +90,42 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Navigation items config
-  const navItems = [
-    { path: "/", label: "Home", icon: <FaHome /> },
-    { path: "/about", label: "About", icon: <FaInfoCircle /> },
-    { path: "/contact", label: "Contact", icon: <FaEnvelope /> },
-    ...(authState.isAuthenticated ? [{ path: "/dashboard", label: "Dashboard", icon: <FaUser /> }] : [])
-  ];
+  // Role-based navigation items
+  const getNavItems = () => {
+    const baseItems = [
+      { path: "/", label: "Home", icon: <FaHome />, show: true },
+      { path: "/about", label: "About", icon: <FaInfoCircle />, show: true },
+      { path: "/contact", label: "Contact", icon: <FaEnvelope />, show: true },
+    ];
+
+    // Role-specific dashboard links
+    const dashboardItems = [
+      { 
+        path: "/dashboard", 
+        label: "Dashboard", 
+        icon: <FaChalkboardTeacher />, 
+        show: user.isAuthenticated && ["student", "teacher"].includes(user.role),
+        title: "Learning Dashboard"
+      },
+      { 
+        path: "/admin", 
+        label: "Admin", 
+        icon: <FaUserShield />, 
+        show: user.isAuthenticated && user.role === "admin",
+        title: "Admin Dashboard"
+      }
+    ];
+
+    return [...baseItems, ...dashboardItems].filter(item => item.show);
+  };
+
+  const navItems = getNavItems();
 
   return (
     <nav className={`navbar ${isScrolled ? "scrolled" : ""}`} ref={menuRef}>
       <div className="navbar-container container">
         <Link to="/" className="logo" aria-label="Maths VLab Home">
-          <img src={logo} alt="" width="40" height="40" />
+          <img src={logo} alt="Maths VLab Logo" width="40" height="40" />
           <span>Maths VLab</span>
         </Link>
 
@@ -118,6 +147,7 @@ const Navbar = () => {
                   className={location.pathname === item.path ? "active" : ""}
                   onClick={() => setMenuOpen(false)}
                   aria-current={location.pathname === item.path ? "page" : undefined}
+                  title={item.title || item.label}
                 >
                   <span className="nav-icon">{item.icon}</span>
                   {item.label}
@@ -127,16 +157,19 @@ const Navbar = () => {
           </ul>
 
           <div className="auth-section">
-            {authState.isAuthenticated ? (
+            {user.isAuthenticated ? (
               <div className="user-menu">
                 <span className="welcome-msg">
                   <FaUser className="user-icon" aria-hidden="true" />
-                  {authState.username}
+                  <span className="user-info">
+                    {user.username}
+                    <span className="user-role">{user.role}</span>
+                  </span>
                 </span>
                 <button
                   className="logout-btn"
                   onClick={handleLogout}
-                  disabled={authState.isLoading}
+                  disabled={user.isLoading}
                   aria-label="Logout"
                 >
                   <FaSignOutAlt aria-hidden="true" />

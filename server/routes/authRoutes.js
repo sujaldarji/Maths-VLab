@@ -1,7 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const StudentModel = require("../Models/Student.js");
+const UserModel = require("../Models/Users.js");
 const { validateSignUp, validateSignIn } = require("../middlewares/validateMiddleware.js");
 const { sanitizeInput } = require("../middlewares/sanitizeMiddleware.js");
 
@@ -22,13 +22,14 @@ router.post('/register', validateSignUp, async (req, res) => {
         const name = sanitizeInput(req.body.name);
         const email = sanitizeInput(req.body.email);
         const password = req.body.password;
-
-        if (await StudentModel.findOne({ email })) {
+        const role = req.body.role || "student";
+        if (await UserModel.findOne({ email })) {
             return res.status(400).json({ message: "User already registered" });
         }
+        const isApproved = role === "teacher" ? false : true;
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        await StudentModel.create({ name, email, password: hashedPassword });
+        await UserModel.create({ name, email, password: hashedPassword, role, isApproved });
 
         res.status(201).json({ success: true, message: "User registered successfully. Please sign in." });
     } catch (error) {
@@ -43,13 +44,19 @@ router.post('/signin', validateSignIn, async (req, res) => {
         const email = sanitizeInput(req.body.email);
         const password = req.body.password;
 
-        const user = await StudentModel.findOne({ email });
+        const user = await UserModel.findOne({ email });
         if (!user) {
             return res.status(404).json({ message: "No user found with this email" });
         }
 
         if (!await bcrypt.compare(password, user.password)) {
             return res.status(401).json({ message: "Incorrect password" });
+        }
+
+        if (user.role === "teacher" && !user.isApproved) {
+            return res.status(403).json({
+                message: "Your account is pending admin approval. Please wait.",
+            });
         }
 
         // Generate Tokens
@@ -64,7 +71,7 @@ router.post('/signin', validateSignIn, async (req, res) => {
             path: "/",
         });
 
-        res.status(200).json({ message: "Login successful", accessToken });
+        res.status(200).json({ message: "Login successful", accessToken: accessToken, role: user.role, });
     } catch (error) {
         console.error("Sign In Error:", error);
         res.status(500).json({ message: "Internal server error" });

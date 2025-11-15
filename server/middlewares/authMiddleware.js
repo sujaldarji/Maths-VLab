@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
+const UserModel = require("../Models/Users.js");
 
-const authenticateUser = (req, res, next) => {
+const authenticateUser = async (req, res, next) => {
     try {
         // Extract access token from cookies or Authorization header
         const token = req.cookies.accessToken || (req.headers.authorization && req.headers.authorization.split(" ")[1]);
@@ -13,13 +14,22 @@ const authenticateUser = (req, res, next) => {
         const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
         if (!decoded || !decoded.userId) {
+            console.log("Hii")
             return res.status(403).json({ message: "Invalid token structure" });
+        }
+
+        // Get user from database to include role
+        const user = await UserModel.findById(decoded.userId).select("role email name");
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
         }
 
         // Attach user details to request
         req.user = {
             userId: decoded.userId,
-            email: decoded.email,  // Include email if present
+            email: user.email,
+            name: user.name,
+            role: user.role
         };
 
         next();

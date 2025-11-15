@@ -6,14 +6,14 @@ require('dotenv').config();
 const crypto = require("crypto");
 const bcrypt = require('bcryptjs');
 const nodemailer = require("nodemailer");
-
-const StudentModel = require('./Models/Student');
+const UserModel = require('./Models/Users');
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const tokenRoutes = require("./routes/tokenRoutes");
 const contactRoutes = require("./routes/contactRoutes");
 const { sendResetEmail } = require("./config/sendMail");
 const topicRoutes = require("./routes/topicRoutes");
+const adminRoutes = require('./routes/adminRoutes');
 
 const app = express();
 
@@ -70,6 +70,7 @@ app.use("/api/userRoutes", userRoutes);
 app.use("/api/tokenRoutes", tokenRoutes);
 app.use("/api/contactRoutes", contactRoutes);
 app.use("/api/topicRoutes", topicRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Global Error Handling Middleware
 app.use((err, req, res, next) => {
@@ -87,7 +88,7 @@ app.post('/api/send-reset-link', async (req, res) => {
     const { email } = req.body;
     try {
         const { email } = req.body;
-        const user = await StudentModel.findOne({ email });
+        const user = await UserModel.findOne({ email });
 
         if (!user) {
             return res.status(404).json({ message: "No user found with this email" });
@@ -100,7 +101,7 @@ app.post('/api/send-reset-link', async (req, res) => {
         const resetTokenExpiry = Date.now() + 15 * 60 * 1000;
 
         // ✅ Update User in Database
-        await StudentModel.updateOne(
+        await UserModel.updateOne(
             { email },
             { $set: { resetToken, resetTokenExpiry } }
         );
@@ -125,7 +126,7 @@ app.post("/api/reset-password", async (req, res) => {
         const { token, password } = req.body;
 
         // Find user with matching token
-        const user = await StudentModel.findOne({ resetToken: token, resetTokenExpiry: { $gt: Date.now() } });
+        const user = await UserModel.findOne({ resetToken: token, resetTokenExpiry: { $gt: Date.now() } });
 
         if (!user) {
             return res.status(400).json({ message: "Invalid or expired token" });

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const StudentSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, "Name is required"],
@@ -21,6 +21,15 @@ const StudentSchema = new mongoose.Schema({
         required: [true, "Password is required"],
         minlength: [6, "Password must be at least 6 characters"],
     },
+     role: {
+        type: String,
+        enum: ["student", "teacher", "admin"],
+        default: "student",
+    },
+    isApproved: {
+        type: Boolean,
+        default: false, // Used only for teacher accounts
+    },
     resetToken: { 
         type: String, 
         default: null // ✅ Stores the password reset token
@@ -32,6 +41,6 @@ const StudentSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 
-const StudentModel = mongoose.model('students', StudentSchema);
+const UserModel = mongoose.model('Users', UserSchema);
 
-module.exports = StudentModel;
+module.exports = UserModel;

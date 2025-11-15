@@ -49,14 +49,34 @@ function SignIn() {
                 { email, password },
                 { withCredentials: true }
             );
+            console.log("Login response:", response.data);
 
-            const { accessToken } = response.data;
+            const { accessToken, role, isApproved } = response.data;
+        
             if (accessToken) {
                 localStorage.setItem("accessToken", accessToken);
+                localStorage.setItem("userRole", role);
+                
+                // Store user data for easy access
+                const userData = {
+                    email: email,
+                    role: role,
+                    isApproved: isApproved
+                };
+                localStorage.setItem("user", JSON.stringify(userData));
             }
 
             setSuccessMessage("✅ Login successful! Redirecting...");
-            setTimeout(() => navigate("/dashboard"), 2000);
+            
+            // Redirect based on role
+            setTimeout(() => {
+                if (role === 'admin') {
+                    navigate("/admin"); // Redirect admin to admin dashboard
+                } else {
+                    navigate("/dashboard"); // Redirect students and teachers to main dashboard
+                }
+            }, 2000);
+            
         } catch (error) {
             setErrorMessage(error.response?.data?.message || "⚠️ Server error! Please try again later.");
         } finally {
